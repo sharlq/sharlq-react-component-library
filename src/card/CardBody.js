@@ -1,5 +1,5 @@
-import React from 'react'
 
+import './card.css'
 const CardBody = ({ children }) => {
     return (
         <div className="card-body">
@@ -8,4 +8,4 @@ const CardBody = ({ children }) => {
     )
 }
 
-export default CardBody 
+export  {CardBody} 

@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+
 import styles from "./select.module.css"
 const error =()=> {throw new Error("add a function that activates when pressing list item")}
 const Select = ({
@@ -40,4 +40,4 @@ const Select = ({
     )
 }
 
-export default Select
+export  {Select}

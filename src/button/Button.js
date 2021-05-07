@@ -1,9 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+
 import './button.css';
 
-
-export const Button = ({label,...props}) => {
+ const Button = ({label,...props}) => {
  
   return (
     <button
@@ -15,3 +13,5 @@ export const Button = ({label,...props}) => {
     </button>
   );
 };
+
+export  {Button}

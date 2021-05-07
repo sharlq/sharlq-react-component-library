@@ -1,6 +1,6 @@
-import React,{ useEffect } from 'react'
+
 import styles from './tablr.module.css';
-import PropTypes from 'prop-types';
+
 
 const Tablr = ({
     rows,
@@ -84,4 +84,4 @@ Tablr.propTypes = {
     headers: PropTypes.arrayOf(PropTypes.string).isRequired,
     rows: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   };
-export default Tablr
+export  {Tablr}

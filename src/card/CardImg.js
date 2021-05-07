@@ -1,4 +1,4 @@
-import React from 'react'
+
 import "./card.css"
 const CardImg = ({src,alt}) => {
     return (
@@ -8,4 +8,4 @@ const CardImg = ({src,alt}) => {
     )
 }
 
-export default CardImg
+export  {CardImg}
