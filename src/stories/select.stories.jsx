@@ -1,4 +1,4 @@
-import Select from "../select"
+import Select from "../select/select"
 
 export default {
     title: 'Input/select',
@@ -6,7 +6,7 @@ export default {
     argTypes:{
         // help you control the input in the page interface the type of 
         // the control and even if its controlable
-    }
+    } 
 };
 const indexate =()=> {console.log("kill them all")}
 const Template = args => <Select {...args} />;

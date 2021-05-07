@@ -1,4 +1,4 @@
-import Tablr from "../Tablr"
+import Tablr from "../tablr/Tablr"
 
 export default {
     title: 'Tablrs/Tablr A',
