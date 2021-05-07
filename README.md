@@ -1,6 +1,6 @@
 # Greating my own component library
   you can visit the package here to check it or use it
-  https://www.npmjs.com/package/sharlq-comp-lib
+  https://www.npmjs.com/package/sharlq-comp-lib  
 i have noticed that i have a certain style and there is components that i create frequently so i am creating them here so i can reuse them without creating them all over again each time
 
 # components
