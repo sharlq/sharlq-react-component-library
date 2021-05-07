@@ -1,7 +1,9 @@
 # Greating my own component library
-  you can visit the package here to check it or use it
+  
+  for learning purposes and maybe to develope it and use it in the futuer i have published my own library  
+  
+  you can visit the package here to check it or use it  
   https://www.npmjs.com/package/sharlq-comp-lib  
-i have noticed that i have a certain style and there is components that i create frequently so i am creating them here so i can reuse them without creating them all over again each time
 
 # components
 ## Select
