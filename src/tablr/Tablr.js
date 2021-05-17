@@ -1,6 +1,6 @@
 
 import styles from './tablr.module.css';
-
+import PropTypes from 'prop-types'
 
 const Tablr = ({
     rows,
