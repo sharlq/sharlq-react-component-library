@@ -6,8 +6,11 @@
   https://www.npmjs.com/package/sharlq-comp-lib  
 
 # components
-## Select
-its a customized  select that take two props  
+## Select  
+  
+its hard to syle the HTML select so i ahve created select component that can be styled easily  
+![Select](./resources/Select.JPG)
+it take two props  
 1. items : an array that has the items of the list
 1. onItem : a function that git triggered when you press the item this function have its list item as an argument
 
@@ -22,7 +25,7 @@ import {Select} from 'sharlq-comp-lib'
 
 ```
 
-  ![Alt text](./resources/Select.JPG)
+  
 
 ## Button
 a simple customizable button
@@ -36,7 +39,12 @@ import {Button} from 'sharlq-comp-lib'
 
 ```
 ## Card
-i have added a simple card with elemnt for images
+i have added a simple card   
+there is also CardImg compnent to provide container to add image to the card  
+and also the CardBody component that provides a container to add text to the card  
+
+  
+note here both the CardImg and CardBody are optional
 
   ### usage
 ```ruby
