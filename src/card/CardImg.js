@@ -1,5 +1,6 @@
 
 import "./card.css"
+import React from 'react'
 const CardImg = ({src,alt}) => {
     return (
         <div className="img-container">

@@ -1,5 +1,6 @@
 
 import styles from "./select.module.css"
+import React from 'react'
 const error =()=> {throw new Error("add a function that activates when pressing list item")}
 const Select = ({
     title="Select From",

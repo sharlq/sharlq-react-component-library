@@ -1,6 +1,6 @@
 
 import './button.css';
-
+import React from 'react'
  const Button = ({label,...props}) => {
  
   return (
