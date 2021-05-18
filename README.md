@@ -8,9 +8,9 @@
 # components
 ## Select  
   
-its hard to syle the HTML select so i ahve created select component that can be styled easily  
-![Select](./resources/Select.JPG)
-it take two props  
+its hard to syle the HTML select so i ahve created select component that can be styled easily    
+  ![Select](./resources/Select.JPG)  
+  it take two props  
 1. items : an array that has the items of the list
 1. onItem : a function that git triggered when you press the item this function have its list item as an argument
 
