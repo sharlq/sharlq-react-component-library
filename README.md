@@ -6,7 +6,7 @@
   https://www.npmjs.com/package/sharlq-comp-lib  
 
 # components
-## Selectnp
+## Select
 its a customized  select that take two props  
 1. items : an array that has the items of the list
 1. onItem : a function that git triggered when you press the item this function have its list item as an argument
