@@ -46,3 +46,18 @@ import {Card} from 'sharlq-comp-lib'
  </Card>
 
 ```
+
+## Animated Card
+
+i have created animated card that hovers relative to the position of your cursor over it
+![Animated Card](./resources/cardAnimated.jpg)
+
+
+### usage
+```ruby
+import {CardAnimated} from 'sharlq-comp-lib'
+ <CardAnimated>
+ {children}
+ </CardAnimated>
+
+```
