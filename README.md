@@ -21,6 +21,9 @@ import {Select} from 'sharlq-comp-lib'
     width = {"175px"}}/>
 
 ```
+
+  ![Alt text](./resources/Select.JPG)
+
 ## Button
 a simple customizable button
   
