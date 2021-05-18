@@ -2,8 +2,7 @@
   
   for learning purposes and to develope it and use it in the futuer i have published my own library  
   
-  you can visit the package here to check it or use it  
-  https://www.npmjs.com/package/sharlq-comp-lib  
+
 
 # components
 ## Select  
@@ -63,8 +62,8 @@ import {Card,CardImg,CardBody} from 'sharlq-comp-lib'
 
 ## Animated Card
 
-i have created animated card that hovers relative to the position of your cursor over it
-![Animated Card](./resources/cardAnimated.jpg)
+i have created animated card that hovers relative to the position of your cursor over it  
+  ![Animated Card](./resources/cardAnimated.jpg)
 
 
 ### usage
