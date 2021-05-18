@@ -1,6 +1,6 @@
 {
   "name": "sharlq-comp-lib",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
