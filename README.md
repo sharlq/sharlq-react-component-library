@@ -1,6 +1,6 @@
 # Greating my own component library
   
-  for learning purposes and maybe to develope it and use it in the futuer i have published my own library  
+  for learning purposes and to develope it and use it in the futuer i have published my own library  
   
   you can visit the package here to check it or use it  
   https://www.npmjs.com/package/sharlq-comp-lib  
@@ -45,11 +45,17 @@ and also the CardBody component that provides a container to add text to the car
 
   
 note here both the CardImg and CardBody are optional
+  
+  ![Card](./resources/Card.JPG)
 
   ### usage
 ```ruby
-import {Card} from 'sharlq-comp-lib'
+import {Card,CardImg,CardBody} from 'sharlq-comp-lib'
  <Card>
+ <CardImg src={"url"} alt={"message"}/>
+ <CardBody>
+ {children}
+ </CardBody>
  {children}
  </Card>
 
