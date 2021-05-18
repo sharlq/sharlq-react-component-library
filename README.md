@@ -23,7 +23,23 @@ import {Select} from 'sharlq-comp-lib'
 ```
 ## Button
 a simple customizable button
+  
+  ### usage
+```ruby
+import {Button} from 'sharlq-comp-lib'
+ <Button
+  label={"press here"},
+   {...props}/>
 
+```
 ## Card
 i have added a simple card with elemnt for images
 
+  ### usage
+```ruby
+import {Card} from 'sharlq-comp-lib'
+ <Card>
+ {children}
+ </Card>
+
+```
