@@ -1,8 +1,9 @@
-import babel from 'rollup-plugin-babel';
+import {babel} from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import external from 'rollup-plugin-peer-deps-external';
 import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
+import del from 'rollup-plugin-delete'
 
 export default [
   {
@@ -30,6 +31,7 @@ export default [
       external(),
       resolve(),
       terser(),
+      del({ targets: 'dist/*' })
     ]
   }
 ];
