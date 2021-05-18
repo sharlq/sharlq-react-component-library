@@ -8,7 +8,7 @@
 ## Select  
   
 its hard to syle the HTML select so i ahve created select component that can be styled easily    
-  ![Select](./resources/Select.JPG?raw=true)  
+  ![Select](https://github.com/sharlq/sharlq-react-component-library/blob/main/resources/Select.JPG?raw=true)  
   it take two props  
 1. items : an array that has the items of the list
 1. onItem : a function that git triggered when you press the item this function have its list item as an argument
@@ -45,7 +45,7 @@ and also the CardBody component that provides a container to add text to the car
   
 note here both the CardImg and CardBody are optional
   
-  ![Card](./resources/Card.JPG?raw=true)
+  ![Card](https://github.com/sharlq/sharlq-react-component-library/blob/main/resources/Card.JPG?raw=true)
 
   ### usage
 ```ruby
@@ -63,7 +63,7 @@ import {Card,CardImg,CardBody} from 'sharlq-comp-lib'
 ## Animated Card
 
 i have created animated card that hovers relative to the position of your cursor over it  
-  ![Animated Card](./resources/cardAnimated.jpg?raw=true)
+  ![Animated Card](https://github.com/sharlq/sharlq-react-component-library/blob/main/resources/cardAnimated.jpg?raw=true)
 
 
 ### usage
