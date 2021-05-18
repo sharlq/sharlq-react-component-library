@@ -1,1 +1,3170 @@
-import t,{useEffect as e,useState as n,useLayoutEffect as s,useRef as r,forwardRef as i,useCallback as o,createElement as a,createContext as l,useContext as u,useMemo as c}from"react";import{unstable_batchedUpdates as d}from"react-dom";function h(){return(h=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var s in n)Object.prototype.hasOwnProperty.call(n,s)&&(t[s]=n[s])}return t}).apply(this,arguments)}function p(t,e){void 0===e&&(e={});var n=e.insertAt;if(t&&"undefined"!=typeof document){var s=document.head||document.getElementsByTagName("head")[0],r=document.createElement("style");r.type="text/css","top"===n&&s.firstChild?s.insertBefore(r,s.firstChild):s.appendChild(r),r.styleSheet?r.styleSheet.cssText=t:r.appendChild(document.createTextNode(t))}}p(".sharlq-button{font-family:Nunito Sans,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700;border:0;border-radius:5px;cursor:pointer;display:inline-block;line-height:1;color:#fff;background-color:#1ea7fd;font-size:14px;padding:11px 20px}");const f=({label:e,...n})=>t.createElement("button",h({type:"button",className:["sharlq-button"]},n),e);p(".AnimatedCard{display:grid;padding:40px;background:linear-gradient(96deg,#003db6,#4f70b8);box-shadow:0 10px 30px -5px rgba(0,0,0,.6);transition:box-shadow .5s;will-change:transform;width:20vw;height:20vh;border-radius:10px}");let m=R();const g=t=>A(t,m);let y=R();g.write=t=>A(t,y);let v=R();g.onStart=t=>A(t,v);let _=R();g.onFrame=t=>A(t,_);let b=R();g.onFinish=t=>A(t,b);let w=[];g.setTimeout=(t,e)=>{let n=g.now()+e,s=()=>{let t=w.findIndex((t=>t.cancel==s));~t&&w.splice(t,1),O.count-=~t?1:0},r={time:n,handler:t,cancel:s};return w.splice(x(n),0,r),O.count+=1,I(),r};let x=t=>~(~w.findIndex((e=>e.time>t))||~w.length);g.cancel=t=>{m.delete(t),y.delete(t)},g.sync=t=>{S=!0,g.batchedUpdates(t),S=!1},g.throttle=t=>{let e;function n(){try{t(...e)}finally{e=null}}function s(...t){e=t,g.onStart(n)}return s.handler=t,s.cancel=()=>{v.delete(n),e=null},s};let k="undefined"!=typeof window?window.requestAnimationFrame:()=>{};g.use=t=>k=t,g.now="undefined"!=typeof performance?()=>performance.now():Date.now,g.batchedUpdates=t=>t(),g.catch=console.error;let P=-1,S=!1;function A(t,e){S?(e.delete(t),t(0)):(e.add(t),I())}function I(){P<0&&(P=0,k(C))}function C(){~P&&(k(C),g.batchedUpdates(V))}function V(){let t=P;P=g.now();let e=x(P);e&&(j(w.splice(0,e),(t=>t.handler())),O.count-=e),v.flush(),m.flush(t?Math.min(64,P-t):16.667),_.flush(),y.flush(),b.flush()}function R(){let t=new Set,e=t;return{add(n){O.count+=e!=t||t.has(n)?0:1,t.add(n)},delete:n=>(O.count-=e==t&&t.has(n)?1:0,t.delete(n)),flush(n){e.size&&(t=new Set,O.count-=e.size,j(e,(e=>e(n)&&t.add(e))),O.count+=t.size,e=t)}}}function j(t,e){t.forEach((t=>{try{e(t)}catch(t){g.catch(t)}}))}const O={count:0,clear(){P=-1,w=[],v=R(),m=R(),_=R(),y=R(),b=R(),O.count=0}};function E(){}const q={arr:Array.isArray,obj:t=>!!t&&"Object"===t.constructor.name,fun:t=>"function"==typeof t,str:t=>"string"==typeof t,num:t=>"number"==typeof t,und:t=>void 0===t};function M(t,e){if(q.arr(t)){if(!q.arr(e)||t.length!==e.length)return!1;for(let n=0;n<t.length;n++)if(t[n]!==e[n])return!1;return!0}return t===e}const N=(t,e)=>t.forEach(e);function F(t,e,n){for(const s in t)e.call(n,t[s],s)}const z=t=>q.und(t)?[]:q.arr(t)?t:[t];function $(t,e){if(t.size){const n=Array.from(t);t.clear(),N(n,e)}}const T=(t,...e)=>$(t,(t=>t(...e)));let L,D,U=null,Q=!1,Y=E;var K=Object.freeze({__proto__:null,get createStringInterpolator(){return L},get to(){return D},get colors(){return U},get skipAnimation(){return Q},get willAdvance(){return Y},assign:t=>{t.to&&(D=t.to),t.now&&(g.now=t.now),void 0!==t.colors&&(U=t.colors),null!=t.skipAnimation&&(Q=t.skipAnimation),t.createStringInterpolator&&(L=t.createStringInterpolator),t.requestAnimationFrame&&g.use(t.requestAnimationFrame),t.batchedUpdates&&(g.batchedUpdates=t.batchedUpdates),t.willAdvance&&(Y=t.willAdvance)}});const B=new Set;let G=[],H=[],W=0;const Z={get idle(){return!B.size&&!G.length},start(t){W>t.priority?(B.add(t),g.onStart(J)):(X(t),g(et))},advance:et,sort(t){if(W)g.onFrame((()=>Z.sort(t)));else{const e=G.indexOf(t);~e&&(G.splice(e,1),tt(t))}},clear(){G=[],B.clear()}};function J(){B.forEach(X),B.clear(),g(et)}function X(t){G.includes(t)||tt(t)}function tt(t){G.splice(function(t,e){const n=t.findIndex(e);return n<0?t.length:n}(G,(e=>e.priority>t.priority)),0,t)}function et(t){const e=H;for(let n=0;n<G.length;n++){const s=G[n];W=s.priority,s.idle||(Y(s),s.advance(t),s.idle||e.push(s))}return W=0,H=G,H.length=0,G=e,G.length>0}const nt="[-+]?\\d*\\.?\\d+";function st(...t){return"\\(\\s*("+t.join(")\\s*,\\s*(")+")\\s*\\)"}const rt=new RegExp("rgb"+st(nt,nt,nt)),it=new RegExp("rgba"+st(nt,nt,nt,nt)),ot=new RegExp("hsl"+st(nt,"[-+]?\\d*\\.?\\d+%","[-+]?\\d*\\.?\\d+%")),at=new RegExp("hsla"+st(nt,"[-+]?\\d*\\.?\\d+%","[-+]?\\d*\\.?\\d+%",nt)),lt=/^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,ut=/^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,ct=/^#([0-9a-fA-F]{6})$/,dt=/^#([0-9a-fA-F]{8})$/;function ht(t,e,n){return n<0&&(n+=1),n>1&&(n-=1),n<1/6?t+6*(e-t)*n:n<.5?e:n<2/3?t+(e-t)*(2/3-n)*6:t}function pt(t,e,n){const s=n<.5?n*(1+e):n+e-n*e,r=2*n-s,i=ht(r,s,t+1/3),o=ht(r,s,t),a=ht(r,s,t-1/3);return Math.round(255*i)<<24|Math.round(255*o)<<16|Math.round(255*a)<<8}function ft(t){const e=parseInt(t,10);return e<0?0:e>255?255:e}function mt(t){return(parseFloat(t)%360+360)%360/360}function gt(t){const e=parseFloat(t);return e<0?0:e>1?255:Math.round(255*e)}function yt(t){const e=parseFloat(t);return e<0?0:e>100?1:e/100}function vt(t){let e=function(t){let e;return"number"==typeof t?t>>>0===t&&t>=0&&t<=4294967295?t:null:(e=ct.exec(t))?parseInt(e[1]+"ff",16)>>>0:U&&void 0!==U[t]?U[t]:(e=rt.exec(t))?(ft(e[1])<<24|ft(e[2])<<16|ft(e[3])<<8|255)>>>0:(e=it.exec(t))?(ft(e[1])<<24|ft(e[2])<<16|ft(e[3])<<8|gt(e[4]))>>>0:(e=lt.exec(t))?parseInt(e[1]+e[1]+e[2]+e[2]+e[3]+e[3]+"ff",16)>>>0:(e=dt.exec(t))?parseInt(e[1],16)>>>0:(e=ut.exec(t))?parseInt(e[1]+e[1]+e[2]+e[2]+e[3]+e[3]+e[4]+e[4],16)>>>0:(e=ot.exec(t))?(255|pt(mt(e[1]),yt(e[2]),yt(e[3])))>>>0:(e=at.exec(t))?(pt(mt(e[1]),yt(e[2]),yt(e[3]))|gt(e[4]))>>>0:null}(t);return null===e?t:(e=e||0,`rgba(${(4278190080&e)>>>24}, ${(16711680&e)>>>16}, ${(65280&e)>>>8}, ${(255&e)/255})`)}const _t=(t,e,n)=>{if(q.fun(t))return t;if(q.arr(t))return _t({range:t,output:e,extrapolate:n});if(q.str(t.output[0]))return L(t);const s=t,r=s.output,i=s.range||[0,1],o=s.extrapolateLeft||s.extrapolate||"extend",a=s.extrapolateRight||s.extrapolate||"extend",l=s.easing||(t=>t);return t=>{const e=function(t,e){for(var n=1;n<e.length-1&&!(e[n]>=t);++n);return n-1}(t,i);return function(t,e,n,s,r,i,o,a,l){let u=l?l(t):t;if(u<e){if("identity"===o)return u;"clamp"===o&&(u=e)}if(u>n){if("identity"===a)return u;"clamp"===a&&(u=n)}if(s===r)return s;if(e===n)return t<=e?s:r;e===-1/0?u=-u:n===1/0?u-=e:u=(u-e)/(n-e);u=i(u),s===-1/0?u=-u:r===1/0?u+=s:u=u*(r-s)+s;return u}(t,i[e],i[e+1],r[e],r[e+1],l,o,a,s.map)}};const bt=Symbol.for("FluidValue.get"),wt=Symbol.for("FluidValue.observers"),xt=t=>Boolean(t&&t[bt]),kt=t=>t&&t[bt]?t[bt]():t,Pt=t=>t[wt]||null;function St(t,e){let n=t[wt];n&&n.forEach((t=>{!function(t,e){t.eventObserved?t.eventObserved(e):t(e)}(t,e)}))}class At{constructor(t){if(!t&&!(t=this.get))throw Error("Unknown getter");It(this,t)}}const It=(t,e)=>Rt(t,bt,e);function Ct(t,e){if(t[bt]){let n=t[wt];n||Rt(t,wt,n=new Set),n.has(e)||(n.add(e),t.observerAdded&&t.observerAdded(n.size,e))}return e}function Vt(t,e){let n=t[wt];if(n&&n.has(e)){const s=n.size-1;s?n.delete(e):t[wt]=null,t.observerRemoved&&t.observerRemoved(s,e)}}const Rt=(t,e,n)=>Object.defineProperty(t,e,{value:n,writable:!0,configurable:!0}),jt=/[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,Ot=/(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))/gi;let Et;const qt=/rgba\(([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+)\)/gi,Mt=(t,e,n,s,r)=>`rgba(${Math.round(e)}, ${Math.round(n)}, ${Math.round(s)}, ${r})`,Nt=t=>{Et||(Et=U?new RegExp(`(${Object.keys(U).join("|")})`,"g"):/^\b$/);const e=t.output.map((t=>kt(t).replace(Ot,vt).replace(Et,vt))),n=e.map((t=>t.match(jt).map(Number))),s=n[0].map(((t,e)=>n.map((t=>{if(!(e in t))throw Error('The arity of each "output" value must be equal');return t[e]})))).map((e=>_t({...t,output:e})));return t=>{let n=0;return e[0].replace(jt,(()=>String(s[n++](t)))).replace(qt,Mt)}},Ft="react-spring: ",zt=t=>{const e=t;let n=!1;if("function"!=typeof e)throw new TypeError(`${Ft}once requires a function parameter`);return(...t)=>{n||(e(...t),n=!0)}},$t=zt(console.warn);const Tt=zt(console.warn);function Lt(t){return q.str(t)&&("#"==t[0]||/\d/.test(t)||t in(U||{}))}const Dt=t=>e(t,Ut),Ut=[];function Qt(){const t=n()[1],e=n(Yt)[0];return Dt(e.unmount),()=>{e.current&&t({})}}function Yt(){const t={current:!0,unmount:()=>()=>{t.current=!1}};return t}function Kt(t){const n=r();return e((()=>{n.current=t})),n.current}const Bt="undefined"!=typeof window&&window.document&&window.document.createElement?s:e,Gt=Symbol.for("Animated:node"),Ht=t=>t&&t[Gt],Wt=(t,e)=>{return n=t,s=Gt,r=e,Object.defineProperty(n,s,{value:r,writable:!0,configurable:!0});var n,s,r},Zt=t=>t&&t[Gt]&&t[Gt].getPayload();class Jt{constructor(){Wt(this,this)}getPayload(){return this.payload||[]}}class Xt extends Jt{constructor(t){super(),this._value=t,this.done=!0,this.durationProgress=0,q.num(this._value)&&(this.lastPosition=this._value)}static create(t){return new Xt(t)}getPayload(){return[this]}getValue(){return this._value}setValue(t,e){return q.num(t)&&(this.lastPosition=t,e&&(t=Math.round(t/e)*e,this.done&&(this.lastPosition=t))),this._value!==t&&(this._value=t,!0)}reset(){const{done:t}=this;this.done=!1,q.num(this._value)&&(this.elapsedTime=0,this.durationProgress=0,this.lastPosition=this._value,t&&(this.lastVelocity=null),this.v0=null)}}class te extends Xt{constructor(t){super(0),this._string=null,this._toString=_t({output:[t,t]})}static create(t){return new te(t)}getValue(){let t=this._string;return null==t?this._string=this._toString(this._value):t}setValue(t){if(q.str(t)){if(t==this._string)return!1;this._string=t,this._value=1}else{if(!super.setValue(t))return!1;this._string=null}return!0}reset(t){t&&(this._toString=_t({output:[this.getValue(),t]})),this._value=0,super.reset()}}const ee={dependencies:null};class ne extends Jt{constructor(t){super(),this.source=t,this.setValue(t)}getValue(t){const e={};return F(this.source,((n,s)=>{var r;(r=n)&&r[Gt]===r?e[s]=n.getValue(t):xt(n)?e[s]=kt(n):t||(e[s]=n)})),e}setValue(t){this.source=t,this.payload=this._makePayload(t)}reset(){this.payload&&N(this.payload,(t=>t.reset()))}_makePayload(t){if(t){const e=new Set;return F(t,this._addToPayload,e),Array.from(e)}}_addToPayload(t){ee.dependencies&&xt(t)&&ee.dependencies.add(t);const e=Zt(t);e&&N(e,(t=>this.add(t)))}}class se extends ne{constructor(t){super(t)}static create(t){return new se(t)}getValue(){return this.source.map((t=>t.getValue()))}setValue(t){const e=this.getPayload();return t.length==e.length?e.some(((e,n)=>e.setValue(t[n]))):(super.setValue(t.map(re)),!0)}}function re(t){return(Lt(t)?te:Xt).create(t)}function ie(t){const e=Ht(t);return e?e.constructor:q.arr(t)?se:Lt(t)?te:Xt}const oe=(t,n)=>{const s=!q.fun(t)||t.prototype&&t.prototype.isReactComponent;return i(((i,l)=>{const u=r(null),c=s&&o((t=>{u.current=function(t,e){t&&(q.fun(t)?t(e):t.current=e);return e}(l,t)}),[l]),[d,h]=function(t,e){const n=new Set;ee.dependencies=n,t.style&&(t={...t,style:e.createAnimatedStyle(t.style)});return t=new ne(t),ee.dependencies=null,[t,n]}(i,n),p=Qt(),f=()=>{const t=u.current;if(s&&!t)return;!1===(!!t&&n.applyAnimatedValues(t,d.getValue(!0)))&&p()},m=new ae(f,h),y=r();Bt((()=>{const t=y.current;y.current=m,N(h,(t=>Ct(t,m))),t&&(N(t.deps,(e=>Vt(e,t))),g.cancel(t.update))})),e(f,[]),Dt((()=>()=>{const t=y.current;N(t.deps,(e=>Vt(e,t)))}));const v=n.getComponentProps(d.getValue());return a(t,{...v,ref:c})}))};class ae{constructor(t,e){this.update=t,this.deps=e}eventObserved(t){"change"==t.type&&g.write(this.update)}}const le=Symbol.for("AnimatedComponent"),ue=t=>q.str(t)?t:t&&q.str(t.displayName)?t.displayName:q.fun(t)&&t.name||null;function ce(t,...e){return q.fun(t)?t(...e):t}const de=(t,e)=>!0===t||!!(e&&t&&(q.fun(t)?t(e):z(t).includes(e))),he=(t,e)=>q.obj(t)?e&&t[e]:t,pe=(t,e)=>!0===t.default?t[e]:t.default?t.default[e]:void 0,fe=t=>t,me=(t,e=fe)=>{let n=ge;t.default&&!0!==t.default&&(t=t.default,n=Object.keys(t));const s={};for(const r of n){const n=e(t[r],r);q.und(n)||(s[r]=n)}return s},ge=["config","onProps","onStart","onChange","onPause","onResume","onRest"],ye={config:1,from:1,to:1,ref:1,loop:1,reset:1,pause:1,cancel:1,reverse:1,immediate:1,default:1,delay:1,onProps:1,onStart:1,onChange:1,onPause:1,onResume:1,onRest:1,onResolve:1,items:1,trail:1,sort:1,expires:1,initial:1,enter:1,update:1,leave:1,children:1,onDestroyed:1,keys:1,callId:1,parentId:1};function ve(t){const e=function(t){const e={};let n=0;if(F(t,((t,s)=>{ye[s]||(e[s]=t,n++)})),n)return e}(t);if(e){const n={to:e};return F(t,((t,s)=>s in e||(n[s]=t))),n}return{...t}}function _e(t){return t=kt(t),q.arr(t)?t.map(_e):Lt(t)?K.createStringInterpolator({range:[0,1],output:[t,t]})(1):t}function be(t){for(const e in t)return!0;return!1}function we(t){return q.fun(t)||q.arr(t)&&q.obj(t[0])}function xe(t,e){var n;null==(n=t.ref)||n.delete(t),null==e||e.delete(t)}function ke(t,e){var n;e&&t.ref!==e&&(null==(n=t.ref)||n.delete(t),e.add(t),t.ref=e)}const Pe={tension:170,friction:26,mass:1,damping:1,easing:t=>t,clamp:!1};class Se{constructor(){this.velocity=0,Object.assign(this,Pe)}}function Ae(t,e){if(q.und(e.decay)){const n=!q.und(e.tension)||!q.und(e.friction);!n&&q.und(e.frequency)&&q.und(e.damping)&&q.und(e.mass)||(t.duration=void 0,t.decay=void 0),n&&(t.frequency=void 0)}else t.duration=void 0}const Ie=[];class Ce{constructor(){this.changed=!1,this.values=Ie,this.toValues=null,this.fromValues=Ie,this.config=new Se,this.immediate=!1}}function Ve(t,{key:e,props:n,defaultProps:s,state:r,actions:i}){return new Promise(((o,a)=>{var l;let u,c,d=de(null!=(l=n.cancel)?l:null==s?void 0:s.cancel,e);if(d)f();else{q.und(n.pause)||(r.paused=de(n.pause,e));let t=null==s?void 0:s.pause;!0!==t&&(t=r.paused||de(t,e)),u=ce(n.delay||0,e),t?(r.resumeQueue.add(p),i.pause()):(i.resume(),p())}function h(){r.resumeQueue.add(p),r.timeouts.delete(c),c.cancel(),u=c.time-g.now()}function p(){u>0?(c=g.setTimeout(f,u),r.pauseQueue.add(h),r.timeouts.add(c)):f()}function f(){r.pauseQueue.delete(h),r.timeouts.delete(c),t<=(r.cancelId||0)&&(d=!0);try{i.start({...n,callId:t,cancel:d},o)}catch(t){a(t)}}}))}const Re=(t,e)=>1==e.length?e[0]:e.some((t=>t.cancelled))?Ee(t.get()):e.every((t=>t.noop))?je(t.get()):Oe(t.get(),e.every((t=>t.finished))),je=t=>({value:t,noop:!0,finished:!0,cancelled:!1}),Oe=(t,e,n=!1)=>({value:t,finished:e,cancelled:n}),Ee=t=>({value:t,cancelled:!0,finished:!1});function qe(t,e,n,s){const{callId:r,parentId:i,onRest:o}=e,{asyncTo:a,promise:l}=n;return i||t!==a||e.reset?n.promise=(async()=>{n.asyncId=r,n.asyncTo=t;const u=me(e,((t,e)=>"onRest"===e?void 0:t));let c,d;const h=new Promise(((t,e)=>(c=t,d=e))),p=t=>{const e=r<=(n.cancelId||0)&&Ee(s)||r!==n.asyncId&&Oe(s,!1);if(e)throw t.result=e,d(t),t},f=(t,e)=>{const i=new Ne,o=new Fe;return(async()=>{if(K.skipAnimation)throw Me(n),o.result=Oe(s,!1),d(o),o;p(i);const a=q.obj(t)?{...t}:{...e,to:t};a.parentId=r,F(u,((t,e)=>{q.und(a[e])&&(a[e]=t)}));const l=await s.start(a);return p(i),n.paused&&await new Promise((t=>{n.resumeQueue.add(t)})),l})()};let m;if(K.skipAnimation)return Me(n),Oe(s,!1);try{let e;e=q.arr(t)?(async t=>{for(const e of t)await f(e)})(t):Promise.resolve(t(f,s.stop.bind(s))),await Promise.all([e.then(c),h]),m=Oe(s.get(),!0,!1)}catch(t){if(t instanceof Ne)m=t.result;else{if(!(t instanceof Fe))throw t;m=t.result}}finally{r==n.asyncId&&(n.asyncId=i,n.asyncTo=i?a:void 0,n.promise=i?l:void 0)}return q.fun(o)&&g.batchedUpdates((()=>{o(m,s,s.item)})),m})():l}function Me(t,e){$(t.timeouts,(t=>t.cancel())),t.pauseQueue.clear(),t.resumeQueue.clear(),t.asyncId=t.asyncTo=t.promise=void 0,e&&(t.cancelId=e)}class Ne extends Error{constructor(){super("An async animation has been interrupted. You see this error because you forgot to use `await` or `.catch(...)` on its returned promise.")}}class Fe extends Error{constructor(){super("SkipAnimationSignal")}}const ze=t=>t instanceof Te;let $e=1;class Te extends At{constructor(){super(...arguments),this.id=$e++,this._priority=0}get priority(){return this._priority}set priority(t){this._priority!=t&&(this._priority=t,this._onPriorityChange(t))}get(){const t=Ht(this);return t&&t.getValue()}to(...t){return K.to(this,t)}interpolate(...t){return $t(`${Ft}The "interpolate" function is deprecated in v9 (use "to" instead)`),K.to(this,t)}toJSON(){return this.get()}observerAdded(t){1==t&&this._attach()}observerRemoved(t){0==t&&this._detach()}_attach(){}_detach(){}_onChange(t,e=!1){St(this,{type:"change",parent:this,value:t,idle:e})}_onPriorityChange(t){this.idle||Z.sort(this),St(this,{type:"priority",parent:this,priority:t})}}const Le=Symbol.for("SpringPhase"),De=t=>(1&t[Le])>0,Ue=t=>(2&t[Le])>0,Qe=t=>(4&t[Le])>0,Ye=(t,e)=>e?t[Le]|=3:t[Le]&=-3,Ke=(t,e)=>e?t[Le]|=4:t[Le]&=-5;class Be extends Te{constructor(t,e){if(super(),this.animation=new Ce,this.defaultProps={},this._state={paused:!1,pauseQueue:new Set,resumeQueue:new Set,timeouts:new Set},this._pendingCalls=new Set,this._lastCallId=0,this._lastToId=0,this._memoizedDuration=0,!q.und(t)||!q.und(e)){const n=q.obj(t)?{...t}:{...e,from:t};q.und(n.default)&&(n.default=!0),this.start(n)}}get idle(){return!(Ue(this)||this._state.asyncTo)||Qe(this)}get goal(){return kt(this.animation.to)}get velocity(){const t=Ht(this);return t instanceof Xt?t.lastVelocity||0:t.getPayload().map((t=>t.lastVelocity||0))}get hasAnimated(){return De(this)}get isAnimating(){return Ue(this)}get isPaused(){return Qe(this)}advance(t){let e=!0,n=!1;const s=this.animation;let{config:r,toValues:i}=s;const o=Zt(s.to);!o&&xt(s.to)&&(i=z(kt(s.to))),s.values.forEach(((a,l)=>{if(a.done)return;const u=a.constructor==te?1:o?o[l].lastPosition:i[l];let c=s.immediate,d=u;if(!c){if(d=a.lastPosition,r.tension<=0)return void(a.done=!0);let e=a.elapsedTime+=t;const n=s.fromValues[l],i=null!=a.v0?a.v0:a.v0=q.arr(r.velocity)?r.velocity[l]:r.velocity;let o;if(q.und(r.duration))if(r.decay){const t=!0===r.decay?.998:r.decay,s=Math.exp(-(1-t)*e);d=n+i/(1-t)*(1-s),c=Math.abs(a.lastPosition-d)<.1,o=i*s}else{o=null==a.lastVelocity?i:a.lastVelocity;const e=r.precision||(n==u?.005:Math.min(1,.001*Math.abs(u-n))),s=r.restVelocity||e/10,l=r.clamp?0:r.bounce,h=!q.und(l),p=n==u?a.v0>0:n<u;let f,m=!1;const g=1,y=Math.ceil(t/g);for(let t=0;t<y&&(f=Math.abs(o)>s,f||(c=Math.abs(u-d)<=e,!c));++t){h&&(m=d==u||d>u==p,m&&(o=-o*l,d=u));o+=(1e-6*-r.tension*(d-u)+.001*-r.friction*o)/r.mass*g,d+=o*g}}else{let s=1;r.duration>0&&(this._memoizedDuration!==r.duration&&(this._memoizedDuration=r.duration,a.durationProgress>0&&(a.elapsedTime=r.duration*a.durationProgress,e=a.elapsedTime+=t)),s=(r.progress||0)+e/this._memoizedDuration,s=s>1?1:s<0?0:s,a.durationProgress=s),d=n+r.easing(s)*(u-n),o=(d-a.lastPosition)/t,c=1==s}a.lastVelocity=o,Number.isNaN(d)&&(console.warn("Got NaN while animating:",this),c=!0)}o&&!o[l].done&&(c=!1),c?a.done=!0:e=!1,a.setValue(d,r.round)&&(n=!0)}));const a=Ht(this);if(e){const t=kt(s.to);(a.setValue(t)||n)&&this._onChange(t),this._stop()}else n&&this._onChange(a.getValue())}set(t){return g.batchedUpdates((()=>{this._stop(),this._focus(t),this._set(t)})),this}pause(){this._update({pause:!0})}resume(){this._update({pause:!1})}finish(){if(Ue(this)){const{to:t,config:e}=this.animation;g.batchedUpdates((()=>{this._onStart(),e.decay||this._set(t,!1),this._stop()}))}return this}update(t){return(this.queue||(this.queue=[])).push(t),this}start(t,e){let n;return q.und(t)?(n=this.queue||[],this.queue=[]):n=[q.obj(t)?t:{...e,to:t}],Promise.all(n.map((t=>this._update(t)))).then((t=>Re(this,t)))}stop(t){const{to:e}=this.animation;return this._focus(this.get()),Me(this._state,t&&this._lastCallId),g.batchedUpdates((()=>this._stop(e,t))),this}reset(){this._update({reset:!0})}eventObserved(t){"change"==t.type?this._start():"priority"==t.type&&(this.priority=t.priority+1)}_prepareNode(t){const e=this.key||"";let{to:n,from:s}=t;n=q.obj(n)?n[e]:n,(null==n||we(n))&&(n=void 0),s=q.obj(s)?s[e]:s,null==s&&(s=void 0);const r={to:n,from:s};return De(this)||(t.reverse&&([n,s]=[s,n]),s=kt(s),q.und(s)?Ht(this)||this._set(n):this._set(s)),r}_update({...t},e){const{key:n,defaultProps:s}=this;t.default&&Object.assign(s,me(t,((t,e)=>/^on/.test(e)?he(t,n):t))),tn(this,t,"onProps"),en(this,"onProps",t,this);const r=this._prepareNode(t);if(Object.isFrozen(this))throw Error("Cannot animate a `SpringValue` object that is frozen. Did you forget to pass your component to `animated(...)` before animating its props?");const i=this._state;return Ve(++this._lastCallId,{key:n,props:t,defaultProps:s,state:i,actions:{pause:()=>{Qe(this)||(Ke(this,!0),T(i.pauseQueue),en(this,"onPause",Oe(this,Ge(this,this.animation.to)),this))},resume:()=>{Qe(this)&&(Ke(this,!1),Ue(this)&&this._resume(),T(i.resumeQueue),en(this,"onResume",Oe(this,Ge(this,this.animation.to)),this))},start:this._merge.bind(this,r)}}).then((n=>{if(t.loop&&n.finished&&(!e||!n.noop)){const e=He(t);if(e)return this._update(e,!0)}return n}))}_merge(t,e,n){if(e.cancel)return this.stop(!0),n(Ee(this));const s=!q.und(t.to),r=!q.und(t.from);if(s||r){if(!(e.callId>this._lastToId))return n(Ee(this));this._lastToId=e.callId}const{key:i,defaultProps:o,animation:a}=this,{to:l,from:u}=a;let{to:c=l,from:d=u}=t;!r||s||e.default&&!q.und(c)||(c=d),e.reverse&&([c,d]=[d,c]);const h=!M(d,u);h&&(a.from=d),d=kt(d);const p=!M(c,l);p&&this._focus(c);const f=we(e.to),{config:m}=a,{decay:y,velocity:v}=m;(s||r)&&(m.velocity=0),e.config&&!f&&function(t,e,n){n&&(Ae(n={...n},e),e={...n,...e}),Ae(t,e),Object.assign(t,e);for(const e in Pe)null==t[e]&&(t[e]=Pe[e]);let{mass:s,frequency:r,damping:i}=t;q.und(r)||(r<.01&&(r=.01),i<0&&(i=0),t.tension=Math.pow(2*Math.PI/r,2)*s,t.friction=4*Math.PI*i*s/r)}(m,ce(e.config,i),e.config!==o.config?ce(o.config,i):void 0);let _=Ht(this);if(!_||q.und(c))return n(Oe(this,!0));const b=q.und(e.reset)?r&&!e.default:!q.und(d)&&de(e.reset,i),w=b?d:this.get(),x=_e(c),k=q.num(x)||q.arr(x)||Lt(x),P=!f&&(!k||de(o.immediate||e.immediate,i));if(p){const t=ie(c);if(t!==_.constructor){if(!P)throw Error(`Cannot animate between ${_.constructor.name} and ${t.name}, as the "to" prop suggests`);_=this._set(x)}}const S=_.constructor;let A=xt(c),I=!1;if(!A){const t=b||!De(this)&&h;(p||t)&&(I=M(_e(w),x),A=!I),M(m.decay,y)&&M(m.velocity,v)||(A=!0)}if(I&&Ue(this)&&(a.changed&&!b?A=!0:A||this._stop(l)),!f&&((A||xt(l))&&(a.values=_.getPayload(),a.toValues=xt(c)?null:S==te?[1]:z(x)),a.immediate!=P&&(a.immediate=P,P||b||this._set(l)),A)){const{onRest:t}=a;N(Xe,(t=>tn(this,e,t)));const s=Oe(this,Ge(this,l));T(this._pendingCalls,s),this._pendingCalls.add(n),a.changed&&g.batchedUpdates((()=>{var e;a.changed=!b,null==t||t(s,this),b?ce(o.onRest,s):null==(e=a.onStart)||e.call(a,s,this)}))}b&&this._set(w),f?n(qe(e.to,e,this._state,this)):A?this._start():Ue(this)&&!p?this._pendingCalls.add(n):n(je(w))}_focus(t){const e=this.animation;t!==e.to&&(Pt(this)&&this._detach(),e.to=t,Pt(this)&&this._attach())}_attach(){let t=0;const{to:e}=this.animation;xt(e)&&(Ct(e,this),ze(e)&&(t=e.priority+1)),this.priority=t}_detach(){const{to:t}=this.animation;xt(t)&&Vt(t,this)}_set(t,e=!0){const n=kt(t);if(!q.und(n)){const t=Ht(this);if(!t||!M(n,t.getValue())){const s=ie(n);t&&t.constructor==s?t.setValue(n):Wt(this,s.create(n)),t&&g.batchedUpdates((()=>{this._onChange(n,e)}))}}return Ht(this)}_onStart(){const t=this.animation;t.changed||(t.changed=!0,en(this,"onStart",Oe(this,Ge(this,t.to)),this))}_onChange(t,e){e||(this._onStart(),ce(this.animation.onChange,t,this)),ce(this.defaultProps.onChange,t,this),super._onChange(t,e)}_start(){const t=this.animation;Ht(this).reset(kt(t.to)),t.immediate||(t.fromValues=t.values.map((t=>t.lastPosition))),Ue(this)||(Ye(this,!0),Qe(this)||this._resume())}_resume(){K.skipAnimation?this.finish():Z.start(this)}_stop(t,e){if(Ue(this)){Ye(this,!1);const n=this.animation;N(n.values,(t=>{t.done=!0})),n.toValues&&(n.onChange=n.onPause=n.onResume=void 0),St(this,{type:"idle",parent:this});const s=e?Ee(this.get()):Oe(this.get(),Ge(this,null!=t?t:n.to));T(this._pendingCalls,s),n.changed&&(n.changed=!1,en(this,"onRest",s,this))}}}function Ge(t,e){const n=_e(e);return M(_e(t.get()),n)}function He(t,e=t.loop,n=t.to){let s=ce(e);if(s){const r=!0!==s&&ve(s),i=(r||t).reverse,o=!r||r.reset;return We({...t,loop:e,default:!1,pause:void 0,to:!i||we(n)?n:void 0,from:o?t.from:void 0,reset:o,...r})}}function We(t){const{to:e,from:n}=t=ve(t),s=new Set;return q.obj(e)&&Je(e,s),q.obj(n)&&Je(n,s),t.keys=s.size?Array.from(s):null,t}function Ze(t){const e=We(t);return q.und(e.default)&&(e.default=me(e)),e}function Je(t,e){F(t,((t,n)=>null!=t&&e.add(n)))}const Xe=["onStart","onRest","onChange","onPause","onResume"];function tn(t,e,n){t.animation[n]=e[n]!==pe(e,n)?he(e[n],t.key):void 0}function en(t,e,...n){var s,r,i,o;null==(r=(s=t.animation)[e])||r.call(s,...n),null==(o=(i=t.defaultProps)[e])||o.call(i,...n)}const nn=["onStart","onChange","onRest"];let sn=1;class rn{constructor(t,e){this.id=sn++,this.springs={},this.queue=[],this._lastAsyncId=0,this._active=new Set,this._changed=new Set,this._started=!1,this._state={paused:!1,pauseQueue:new Set,resumeQueue:new Set,timeouts:new Set},this._events={onStart:new Map,onChange:new Map,onRest:new Map},this._onFrame=this._onFrame.bind(this),e&&(this._flush=e),t&&this.start({default:!0,...t})}get idle(){return!this._state.asyncTo&&Object.values(this.springs).every((t=>t.idle))}get item(){return this._item}set item(t){this._item=t}get(){const t={};return this.each(((e,n)=>t[n]=e.get())),t}set(t){for(const e in t){const n=t[e];q.und(n)||this.springs[e].set(n)}}update(t){return t&&this.queue.push(We(t)),this}start(t){let{queue:e}=this;return t?e=z(t).map(We):this.queue=[],this._flush?this._flush(this,e):(hn(this,e),on(this,e))}stop(t,e){if(t!==!!t&&(e=t),e){const n=this.springs;N(z(e),(e=>n[e].stop(!!t)))}else Me(this._state,this._lastAsyncId),this.each((e=>e.stop(!!t)));return this}pause(t){if(q.und(t))this.start({pause:!0});else{const e=this.springs;N(z(t),(t=>e[t].pause()))}return this}resume(t){if(q.und(t))this.start({pause:!1});else{const e=this.springs;N(z(t),(t=>e[t].resume()))}return this}each(t){F(this.springs,t)}_onFrame(){const{onStart:t,onChange:e,onRest:n}=this._events,s=this._active.size>0,r=this._changed.size>0;(s&&!this._started||r&&!this._started)&&(this._started=!0,$(t,(([t,e])=>{e.value=this.get(),t(e,this,this._item)})));const i=!s&&this._started,o=r||i&&n.size?this.get():null;r&&e.size&&$(e,(([t,e])=>{e.value=o,t(e,this,this._item)})),i&&(this._started=!1,$(n,(([t,e])=>{e.value=o,t(e,this,this._item)})))}eventObserved(t){if("change"==t.type)this._changed.add(t.parent),t.idle||this._active.add(t.parent);else{if("idle"!=t.type)return;this._active.delete(t.parent)}g.onFrame(this._onFrame)}}function on(t,e){return Promise.all(e.map((e=>an(t,e)))).then((e=>Re(t,e)))}async function an(t,e,n){const{keys:s,to:r,from:i,loop:o,onRest:a,onResolve:l}=e,u=q.obj(e.default)&&e.default;o&&(e.loop=!1),!1===r&&(e.to=null),!1===i&&(e.from=null);const c=q.arr(r)||q.fun(r)?r:void 0;c?(e.to=void 0,e.onRest=void 0,u&&(u.onRest=void 0)):N(nn,(n=>{const s=e[n];if(q.fun(s)){const r=t._events[n];e[n]=({finished:t,cancelled:e})=>{const n=r.get(s);n?(t||(n.finished=!1),e&&(n.cancelled=!0)):r.set(s,{value:null,finished:t||!1,cancelled:e||!1})},u&&(u[n]=e[n])}}));const d=t._state;e.pause===!d.paused?(d.paused=e.pause,T(e.pause?d.pauseQueue:d.resumeQueue)):d.paused&&(e.pause=!0);const h=(s||Object.keys(t.springs)).map((n=>t.springs[n].start(e))),p=!0===e.cancel||!0===pe(e,"cancel");(c||p&&d.asyncId)&&h.push(Ve(++t._lastAsyncId,{props:e,state:d,actions:{pause:E,resume:E,start(e,n){p?(Me(d,t._lastAsyncId),n(Ee(t))):(e.onRest=a,n(qe(c,e,d,t)))}}})),d.paused&&await new Promise((t=>{d.resumeQueue.add(t)}));const f=Re(t,await Promise.all(h));if(o&&f.finished&&(!n||!f.noop)){const n=He(e,o,r);if(n)return hn(t,[n]),an(t,n,!0)}return l&&g.batchedUpdates((()=>l(f,t,t.item))),f}function ln(t,e){const n={...t.springs};return e&&N(z(e),(t=>{q.und(t.keys)&&(t=We(t)),q.obj(t.to)||(t={...t,to:void 0}),dn(n,t,(t=>cn(t)))})),n}function un(t,e){F(e,((e,n)=>{t.springs[n]||(t.springs[n]=e,Ct(e,t))}))}function cn(t,e){const n=new Be;return n.key=t,e&&Ct(n,e),n}function dn(t,e,n){e.keys&&N(e.keys,(s=>{(t[s]||(t[s]=n(s)))._prepareNode(e)}))}function hn(t,e){N(e,(e=>{dn(t.springs,e,(e=>cn(e,t)))}))}const pn=({children:t,...s})=>{const i=u(fn),o=s.pause||!!i.pause,l=s.immediate||!!i.immediate;s=function(t,s){const[i]=n((()=>({inputs:s,result:t()}))),o=r(),a=o.current;let l=a;l?Boolean(s&&l.inputs&&function(t,e){if(t.length!==e.length)return!1;for(let n=0;n<t.length;n++)if(t[n]!==e[n])return!1;return!0}(s,l.inputs))||(l={inputs:s,result:t()}):l=i;return e((()=>{o.current=l,a==i&&(i.inputs=i.result=void 0)}),[l]),l.result}((()=>({pause:o,immediate:l})),[o,l]);const{Provider:c}=fn;return a(c,{value:s},t)},fn=(mn=pn,gn={},Object.assign(mn,l(gn)),mn.Provider._context=mn,mn.Consumer._context=mn,mn);var mn,gn;pn.Provider=fn.Provider,pn.Consumer=fn.Consumer;class yn extends Function{constructor(){super("return arguments.callee._call.apply(arguments.callee, arguments)"),this.current=[]}_call(t){Tt(`${Ft}Directly calling start instead of using the api object is deprecated in v9 (use ".start" instead)`),this.start(t)}set(t){N(this.current,(e=>e.set(t)))}start(t){const e=[];return N(this.current,((n,s)=>{if(q.und(t))e.push(n.start());else{const r=this._getProps(t,n,s);r&&e.push(n.start(r))}})),e}update(t){return N(this.current,((e,n)=>e.update(this._getProps(t,e,n)))),this}add(t){this.current.includes(t)||this.current.push(t)}delete(t){const e=this.current.indexOf(t);~e&&this.current.splice(e,1)}_getProps(t,e,n){return q.fun(t)?t(n,e):t}}function vn(t,e,n){const s=q.fun(e)&&e;s&&!n&&(n=[]);const i=c((()=>s||3==arguments.length?new yn:void 0),[]),o=r(0),a=Qt(),l=c((()=>({ctrls:[],queue:[],flush(t,e){const n=ln(t,e);return o.current>0&&!l.queue.length&&!Object.keys(n).some((e=>!t.springs[e]))?on(t,e):new Promise((s=>{un(t,n),l.queue.push((()=>{s(on(t,e))})),a()}))}})),[]),d=[...l.ctrls],h=[],p=Kt(t)||0,f=d.slice(t,p);function m(t,n){for(let r=t;r<n;r++){const t=d[r]||(d[r]=new rn(null,l.flush)),n=s?s(r,t):e[r];n&&(h[r]=Ze(n))}}c((()=>{d.length=t,m(p,t)}),[t]),c((()=>{m(0,Math.min(p,t))}),n);const g=d.map(((t,e)=>ln(t,h[e]))),y=u(pn),v=Kt(y),_=y!==v&&be(y);Bt((()=>{o.current++,l.ctrls=d;const{queue:t}=l;t.length&&(l.queue=[],N(t,(t=>t()))),N(f,(t=>{xe(t,i),t.stop(!0)})),N(d,((t,e)=>{un(t,g[e]),null==i||i.add(t),_&&t.start({default:y});const n=h[e];n&&(ke(t,n.ref),t.ref?t.queue.push(n):t.start(n))}))})),Dt((()=>()=>{N(l.ctrls,(t=>t.stop(!0)))}));const b=g.map((t=>({...t})));return i?[b,i]:b}N(["stop","pause","resume"],(t=>{yn.prototype[t]=function(){return N(this.current,(e=>e[t](...arguments))),this}}));class _n extends Te{constructor(t,e){super(),this.source=t,this.idle=!0,this._active=new Set,this.calc=_t(...e);const n=this._get(),s=ie(n);Wt(this,s.create(n))}advance(t){const e=this._get();M(e,this.get())||(Ht(this).setValue(e),this._onChange(e,this.idle)),!this.idle&&wn(this._active)&&xn(this)}_get(){const t=q.arr(this.source)?this.source.map(kt):z(kt(this.source));return this.calc(...t)}_start(){this.idle&&!wn(this._active)&&(this.idle=!1,N(Zt(this),(t=>{t.done=!1})),K.skipAnimation?(g.batchedUpdates((()=>this.advance())),xn(this)):Z.start(this))}_attach(){let t=1;N(z(this.source),(e=>{xt(e)&&Ct(e,this),ze(e)&&(e.idle||this._active.add(e),t=Math.max(t,e.priority+1))})),this.priority=t,this._start()}_detach(){N(z(this.source),(t=>{xt(t)&&Vt(t,this)})),this._active.clear(),xn(this)}eventObserved(t){"change"==t.type?t.idle?this.advance():(this._active.add(t.parent),this._start()):"idle"==t.type?this._active.delete(t.parent):"priority"==t.type&&(this.priority=z(this.source).reduce(((t,e)=>Math.max(t,(ze(e)?e.priority:0)+1)),0))}}function bn(t){return!1!==t.idle}function wn(t){return!t.size||Array.from(t).every(bn)}function xn(t){t.idle||(t.idle=!0,N(Zt(t),(t=>{t.done=!0})),St(t,{type:"idle",parent:t}))}K.assign({createStringInterpolator:Nt,to:(t,e)=>new _n(t,e)});const kn=/^--/;function Pn(t,e){return null==e||"boolean"==typeof e||""===e?"":"number"!=typeof e||0===e||kn.test(t)||An.hasOwnProperty(t)&&An[t]?(""+e).trim():e+"px"}const Sn={};let An={animationIterationCount:!0,borderImageOutset:!0,borderImageSlice:!0,borderImageWidth:!0,boxFlex:!0,boxFlexGroup:!0,boxOrdinalGroup:!0,columnCount:!0,columns:!0,flex:!0,flexGrow:!0,flexPositive:!0,flexShrink:!0,flexNegative:!0,flexOrder:!0,gridRow:!0,gridRowEnd:!0,gridRowSpan:!0,gridRowStart:!0,gridColumn:!0,gridColumnEnd:!0,gridColumnSpan:!0,gridColumnStart:!0,fontWeight:!0,lineClamp:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,tabSize:!0,widows:!0,zIndex:!0,zoom:!0,fillOpacity:!0,floodOpacity:!0,stopOpacity:!0,strokeDasharray:!0,strokeDashoffset:!0,strokeMiterlimit:!0,strokeOpacity:!0,strokeWidth:!0};const In=["Webkit","Ms","Moz","O"];An=Object.keys(An).reduce(((t,e)=>(In.forEach((n=>t[((t,e)=>t+e.charAt(0).toUpperCase()+e.substring(1))(n,e)]=t[e])),t)),An);const Cn=/^(matrix|translate|scale|rotate|skew)/,Vn=/^(translate)/,Rn=/^(rotate|skew)/,jn=(t,e)=>q.num(t)&&0!==t?t+e:t,On=(t,e)=>q.arr(t)?t.every((t=>On(t,e))):q.num(t)?t===e:parseFloat(t)===e;class En extends ne{constructor({x:t,y:e,z:n,...s}){const r=[],i=[];(t||e||n)&&(r.push([t||0,e||0,n||0]),i.push((t=>[`translate3d(${t.map((t=>jn(t,"px"))).join(",")})`,On(t,0)]))),F(s,((t,e)=>{if("transform"===e)r.push([t||""]),i.push((t=>[t,""===t]));else if(Cn.test(e)){if(delete s[e],q.und(t))return;const n=Vn.test(e)?"px":Rn.test(e)?"deg":"";r.push(z(t)),i.push("rotate3d"===e?([t,e,s,r])=>[`rotate3d(${t},${e},${s},${jn(r,n)})`,On(r,0)]:t=>[`${e}(${t.map((t=>jn(t,n))).join(",")})`,On(t,e.startsWith("scale")?1:0)])}})),r.length&&(s.transform=new qn(r,i)),super(s)}}class qn extends At{constructor(t,e){super(),this.inputs=t,this.transforms=e,this._value=null}get(){return this._value||(this._value=this._get())}_get(){let t="",e=!0;return N(this.inputs,((n,s)=>{const r=kt(n[0]),[i,o]=this.transforms[s](q.arr(r)?r:n.map(kt));t+=" "+i,e=e&&o})),e?"none":t}observerAdded(t){1==t&&N(this.inputs,(t=>N(t,(t=>xt(t)&&Ct(t,this)))))}observerRemoved(t){0==t&&N(this.inputs,(t=>N(t,(t=>xt(t)&&Vt(t,this)))))}eventObserved(t){"change"==t.type&&(this._value=null),St(this,t)}}K.assign({batchedUpdates:d,createStringInterpolator:Nt,colors:{transparent:0,aliceblue:4042850303,antiquewhite:4209760255,aqua:16777215,aquamarine:2147472639,azure:4043309055,beige:4126530815,bisque:4293182719,black:255,blanchedalmond:4293643775,blue:65535,blueviolet:2318131967,brown:2771004159,burlywood:3736635391,burntsienna:3934150143,cadetblue:1604231423,chartreuse:2147418367,chocolate:3530104575,coral:4286533887,cornflowerblue:1687547391,cornsilk:4294499583,crimson:3692313855,cyan:16777215,darkblue:35839,darkcyan:9145343,darkgoldenrod:3095792639,darkgray:2846468607,darkgreen:6553855,darkgrey:2846468607,darkkhaki:3182914559,darkmagenta:2332068863,darkolivegreen:1433087999,darkorange:4287365375,darkorchid:2570243327,darkred:2332033279,darksalmon:3918953215,darkseagreen:2411499519,darkslateblue:1211993087,darkslategray:793726975,darkslategrey:793726975,darkturquoise:13554175,darkviolet:2483082239,deeppink:4279538687,deepskyblue:12582911,dimgray:1768516095,dimgrey:1768516095,dodgerblue:512819199,firebrick:2988581631,floralwhite:4294635775,forestgreen:579543807,fuchsia:4278255615,gainsboro:3705462015,ghostwhite:4177068031,gold:4292280575,goldenrod:3668254975,gray:2155905279,green:8388863,greenyellow:2919182335,grey:2155905279,honeydew:4043305215,hotpink:4285117695,indianred:3445382399,indigo:1258324735,ivory:4294963455,khaki:4041641215,lavender:3873897215,lavenderblush:4293981695,lawngreen:2096890111,lemonchiffon:4294626815,lightblue:2916673279,lightcoral:4034953471,lightcyan:3774873599,lightgoldenrodyellow:4210742015,lightgray:3553874943,lightgreen:2431553791,lightgrey:3553874943,lightpink:4290167295,lightsalmon:4288707327,lightseagreen:548580095,lightskyblue:2278488831,lightslategray:2005441023,lightslategrey:2005441023,lightsteelblue:2965692159,lightyellow:4294959359,lime:16711935,limegreen:852308735,linen:4210091775,magenta:4278255615,maroon:2147483903,mediumaquamarine:1724754687,mediumblue:52735,mediumorchid:3126187007,mediumpurple:2473647103,mediumseagreen:1018393087,mediumslateblue:2070474495,mediumspringgreen:16423679,mediumturquoise:1221709055,mediumvioletred:3340076543,midnightblue:421097727,mintcream:4127193855,mistyrose:4293190143,moccasin:4293178879,navajowhite:4292783615,navy:33023,oldlace:4260751103,olive:2155872511,olivedrab:1804477439,orange:4289003775,orangered:4282712319,orchid:3664828159,palegoldenrod:4008225535,palegreen:2566625535,paleturquoise:2951671551,palevioletred:3681588223,papayawhip:4293907967,peachpuff:4292524543,peru:3448061951,pink:4290825215,plum:3718307327,powderblue:2967529215,purple:2147516671,rebeccapurple:1714657791,red:4278190335,rosybrown:3163525119,royalblue:1097458175,saddlebrown:2336560127,salmon:4202722047,sandybrown:4104413439,seagreen:780883967,seashell:4294307583,sienna:2689740287,silver:3233857791,skyblue:2278484991,slateblue:1784335871,slategray:1887473919,slategrey:1887473919,snow:4294638335,springgreen:16744447,steelblue:1182971135,tan:3535047935,teal:8421631,thistle:3636451583,tomato:4284696575,turquoise:1088475391,violet:4001558271,wheat:4125012991,white:4294967295,whitesmoke:4126537215,yellow:4294902015,yellowgreen:2597139199}});const Mn=((t,{applyAnimatedValues:e=(()=>!1),createAnimatedStyle:n=(t=>new ne(t)),getComponentProps:s=(t=>t)}={})=>{const r={applyAnimatedValues:e,createAnimatedStyle:n,getComponentProps:s},i=t=>{const e=ue(t)||"Anonymous";return(t=q.str(t)?i[t]||(i[t]=oe(t,r)):t[le]||(t[le]=oe(t,r))).displayName=`Animated(${e})`,t};return F(t,((e,n)=>{q.arr(t)&&(n=ue(e)),i[n]=i(e)})),{animated:i}})(["a","abbr","address","area","article","aside","audio","b","base","bdi","bdo","big","blockquote","body","br","button","canvas","caption","cite","code","col","colgroup","data","datalist","dd","del","details","dfn","dialog","div","dl","dt","em","embed","fieldset","figcaption","figure","footer","form","h1","h2","h3","h4","h5","h6","head","header","hgroup","hr","html","i","iframe","img","input","ins","kbd","keygen","label","legend","li","link","main","map","mark","menu","menuitem","meta","meter","nav","noscript","object","ol","optgroup","option","output","p","param","picture","pre","progress","q","rp","rt","ruby","s","samp","script","section","select","small","source","span","strong","style","sub","summary","sup","table","tbody","td","textarea","tfoot","th","thead","time","title","tr","track","u","ul","var","video","wbr","circle","clipPath","defs","ellipse","foreignObject","g","image","line","linearGradient","mask","path","pattern","polygon","polyline","radialGradient","rect","stop","svg","text","tspan"],{applyAnimatedValues:function(t,e){if(!t.nodeType||!t.setAttribute)return!1;const n="filter"===t.nodeName||t.parentNode&&"filter"===t.parentNode.nodeName,{style:s,children:r,scrollTop:i,scrollLeft:o,...a}=e,l=Object.values(a),u=Object.keys(a).map((e=>n||t.hasAttribute(e)?e:Sn[e]||(Sn[e]=e.replace(/([A-Z])/g,(t=>"-"+t.toLowerCase())))));void 0!==r&&(t.textContent=r);for(let e in s)if(s.hasOwnProperty(e)){const n=Pn(e,s[e]);"float"===e?e="cssFloat":kn.test(e)?t.style.setProperty(e,n):t.style[e]=n}u.forEach(((e,n)=>{t.setAttribute(e,l[n])})),void 0!==i&&(t.scrollTop=i),void 0!==o&&(t.scrollLeft=o)},createAnimatedStyle:t=>new En(t),getComponentProps:({scrollTop:t,scrollLeft:e,...n})=>n}).animated;function Nn({children:e,cardStyle:s={}}){const i=r(),[o,a]=n(!1),[l,u]=function(t,e){const n=q.fun(t),[[s],r]=vn(1,n?t:[t],n?e||[]:e);return n||2==arguments.length?[s,r]:s}((()=>({xys:[0,0,1],config:{mass:10,tension:400,friction:40,precision:1e-5}})));return t.createElement(Mn.div,{ref:i,className:"AnimatedCard",onMouseEnter:()=>a(!0),onMouseMove:({clientX:t,clientY:e})=>{const n=t-(i.current.offsetLeft-(window.scrollX||window.pageXOffset||document.body.scrollLeft)),s=[-(e-(i.current.offsetTop-(window.scrollY||window.pageYOffset||document.body.scrollTop))-i.current.clientHeight/2)/50,(n-i.current.clientWidth/2)/50,1.07];u({xys:s})},onMouseLeave:()=>{a(!1),u({xys:[0,0,1]})},style:{zIndex:o?2:1,transform:l.xys.interpolate(((t,e,n)=>`perspective(600px) rotateX(${t}deg) rotateY(${e}deg) scale(${n})`)),...s}},e)}var Fn="select-module_categoryes__2YRih",zn="select-module_dropDownList__2mtJK",$n="select-module_dropDownListItems__ZcdKy";p(".select-module_categoryes__2YRih{font-family:Nunito Sans,Helvetica Neue,Helvetica,Arial,sans-serif;display:flex;align-items:center;justify-items:center;flex-direction:column;min-height:150px}.select-module_categoryes__2YRih .select-module_dropDownList__2mtJK{cursor:pointer;padding-left:5px;margin-top:2vh;height:26px;min-width:150px!important;background:#fff;border:1px solid rgba(0,0,0,.3);border-radius:5px;display:flex;justify-content:space-between;align-items:center}.select-module_categoryes__2YRih .select-module_dropDownList__2mtJK svg{align-self:center;padding-right:5px}.select-module_categoryes__2YRih .select-module_dropDownListItems__ZcdKy{padding-top:5px;padding-left:5px;padding-bottom:5px;position:relative;top:-4px;overflow:hidden;z-index:1;background:#fff;width:155px;border:1px solid rgba(0,0,0,.3);border-top:none;border-radius:5px;border-top-left-radius:0;border-top-right-radius:0}.select-module_categoryes__2YRih .select-module_dropDownListItems__ZcdKy li{cursor:pointer;padding-left:5px;list-style:none}.select-module_categoryes__2YRih .select-module_dropDownListItems__ZcdKy li:hover{background:#f5f5f5}");const Tn=()=>{throw new Error("add a function that activates when pressing list item")},Ln=({title:e="Select From",items:s=["firstItem","secondItem","thirdItem"],onItem:r=Tn,width:i="175px"})=>{const o=s.map((e=>t.createElement("li",{key:e,onClick:()=>r(e)},e)));console.log(o);const[a,l]=n(!1);return t.createElement("div",{className:Fn},t.createElement("div",{key:"controls2",onBlur:()=>{l(!1)},tabIndex:"0"},t.createElement("div",{className:zn,style:{width:i},onClick:()=>{l((t=>!t))}},t.createElement("p",null,e),t.createElement("svg",{height:"20px",viewBox:"0 0 320 512"},t.createElement("path",{fill:"currentColor",d:"M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"}))),a&&t.createElement("div",{className:$n,style:{width:i}},o)))};p(".card{position:relative;margin:.25em;margin-top:2.5em;width:18vw;height:25vw;box-shadow:1px 0 7px rgba(0,0,0,.1),-1px 0 7px rgba(0,0,0,.1)}.img-container{width:100%;height:15vw;overflow:hidden;display:flex;justify-content:center}.img-container .img{max-width:100%;height:inherit}.card-body{padding:10px}");const Dn=({children:e})=>t.createElement("div",{className:"card"},e),Un=({children:e})=>t.createElement("div",{className:"card-body"},e),Qn=({src:e,alt:n})=>t.createElement("div",{className:"img-container"},t.createElement("img",{src:e,className:"img",alt:n}));export{Nn as AnimatedCard,f as Button,Dn as Card,Un as CardBody,Qn as CardImg,Ln as Select};
+import React, { useEffect, useState, useLayoutEffect as useLayoutEffect$1, useRef, forwardRef, useCallback, createElement, createContext, useContext, useMemo } from 'react';
+import { unstable_batchedUpdates } from 'react-dom';
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function styleInject(css, ref) {
+  if ( ref === void 0 ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css$3 = ".sharlq-button{font-family:Nunito Sans,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700;border:0;border-radius:5px;cursor:pointer;display:inline-block;line-height:1;color:#fff;background-color:#1ea7fd;font-size:14px;padding:11px 20px}";
+styleInject(css$3);
+
+const Button = ({
+  label,
+  ...props
+}) => {
+  return /*#__PURE__*/React.createElement("button", _extends({
+    type: "button",
+    className: ['sharlq-button']
+  }, props), label);
+};
+
+var css$2 = ".AnimatedCard{display:grid;padding:40px;background:linear-gradient(96deg,#003db6,#4f70b8);box-shadow:0 10px 30px -5px rgba(0,0,0,.6);transition:box-shadow .5s;will-change:transform;width:20vw;height:20vh;border-radius:10px}";
+styleInject(css$2);
+
+let updateQueue = makeQueue();
+const raf = (fn) => schedule(fn, updateQueue);
+let writeQueue = makeQueue();
+raf.write = (fn) => schedule(fn, writeQueue);
+let onStartQueue = makeQueue();
+raf.onStart = (fn) => schedule(fn, onStartQueue);
+let onFrameQueue = makeQueue();
+raf.onFrame = (fn) => schedule(fn, onFrameQueue);
+let onFinishQueue = makeQueue();
+raf.onFinish = (fn) => schedule(fn, onFinishQueue);
+let timeouts = [];
+raf.setTimeout = (handler, ms) => {
+  let time = raf.now() + ms;
+  let cancel = () => {
+    let i = timeouts.findIndex((t) => t.cancel == cancel);
+    if (~i)
+      timeouts.splice(i, 1);
+    __raf.count -= ~i ? 1 : 0;
+  };
+  let timeout = {time, handler, cancel};
+  timeouts.splice(findTimeout(time), 0, timeout);
+  __raf.count += 1;
+  start();
+  return timeout;
+};
+let findTimeout = (time) => ~(~timeouts.findIndex((t) => t.time > time) || ~timeouts.length);
+raf.cancel = (fn) => {
+  updateQueue.delete(fn);
+  writeQueue.delete(fn);
+};
+raf.sync = (fn) => {
+  sync = true;
+  raf.batchedUpdates(fn);
+  sync = false;
+};
+raf.throttle = (fn) => {
+  let lastArgs;
+  function queuedFn() {
+    try {
+      fn(...lastArgs);
+    } finally {
+      lastArgs = null;
+    }
+  }
+  function throttled(...args) {
+    lastArgs = args;
+    raf.onStart(queuedFn);
+  }
+  throttled.handler = fn;
+  throttled.cancel = () => {
+    onStartQueue.delete(queuedFn);
+    lastArgs = null;
+  };
+  return throttled;
+};
+let nativeRaf = typeof window != "undefined" ? window.requestAnimationFrame : () => {
+};
+raf.use = (impl) => nativeRaf = impl;
+raf.now = typeof performance != "undefined" ? () => performance.now() : Date.now;
+raf.batchedUpdates = (fn) => fn();
+raf.catch = console.error;
+let ts = -1;
+let sync = false;
+function schedule(fn, queue) {
+  if (sync) {
+    queue.delete(fn);
+    fn(0);
+  } else {
+    queue.add(fn);
+    start();
+  }
+}
+function start() {
+  if (ts < 0) {
+    ts = 0;
+    nativeRaf(loop);
+  }
+}
+function loop() {
+  if (~ts) {
+    nativeRaf(loop);
+    raf.batchedUpdates(update);
+  }
+}
+function update() {
+  let prevTs = ts;
+  ts = raf.now();
+  let count = findTimeout(ts);
+  if (count) {
+    eachSafely(timeouts.splice(0, count), (t) => t.handler());
+    __raf.count -= count;
+  }
+  onStartQueue.flush();
+  updateQueue.flush(prevTs ? Math.min(64, ts - prevTs) : 16.667);
+  onFrameQueue.flush();
+  writeQueue.flush();
+  onFinishQueue.flush();
+}
+function makeQueue() {
+  let next = new Set();
+  let current = next;
+  return {
+    add(fn) {
+      __raf.count += current == next && !next.has(fn) ? 1 : 0;
+      next.add(fn);
+    },
+    delete(fn) {
+      __raf.count -= current == next && next.has(fn) ? 1 : 0;
+      return next.delete(fn);
+    },
+    flush(arg) {
+      if (current.size) {
+        next = new Set();
+        __raf.count -= current.size;
+        eachSafely(current, (fn) => fn(arg) && next.add(fn));
+        __raf.count += next.size;
+        current = next;
+      }
+    }
+  };
+}
+function eachSafely(values, each) {
+  values.forEach((value) => {
+    try {
+      each(value);
+    } catch (e) {
+      raf.catch(e);
+    }
+  });
+}
+const __raf = {
+  count: 0,
+  clear() {
+    ts = -1;
+    timeouts = [];
+    onStartQueue = makeQueue();
+    updateQueue = makeQueue();
+    onFrameQueue = makeQueue();
+    writeQueue = makeQueue();
+    onFinishQueue = makeQueue();
+    __raf.count = 0;
+  }
+};
+
+function noop() {
+}
+const defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {value, writable: true, configurable: true});
+const is = {
+  arr: Array.isArray,
+  obj: (a) => !!a && a.constructor.name === "Object",
+  fun: (a) => typeof a === "function",
+  str: (a) => typeof a === "string",
+  num: (a) => typeof a === "number",
+  und: (a) => a === void 0
+};
+function isEqual(a, b) {
+  if (is.arr(a)) {
+    if (!is.arr(b) || a.length !== b.length)
+      return false;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i])
+        return false;
+    }
+    return true;
+  }
+  return a === b;
+}
+const each = (obj, fn) => obj.forEach(fn);
+function eachProp(obj, fn, ctx) {
+  for (const key in obj) {
+    fn.call(ctx, obj[key], key);
+  }
+}
+const toArray = (a) => is.und(a) ? [] : is.arr(a) ? a : [a];
+function flush(queue, iterator) {
+  if (queue.size) {
+    const items = Array.from(queue);
+    queue.clear();
+    each(items, iterator);
+  }
+}
+const flushCalls = (queue, ...args) => flush(queue, (fn) => fn(...args));
+
+let createStringInterpolator;
+let to;
+let colors = null;
+let skipAnimation = false;
+let willAdvance = noop;
+const assign = (globals) => {
+  if (globals.to)
+    to = globals.to;
+  if (globals.now)
+    raf.now = globals.now;
+  if (globals.colors !== void 0)
+    colors = globals.colors;
+  if (globals.skipAnimation != null)
+    skipAnimation = globals.skipAnimation;
+  if (globals.createStringInterpolator)
+    createStringInterpolator = globals.createStringInterpolator;
+  if (globals.requestAnimationFrame)
+    raf.use(globals.requestAnimationFrame);
+  if (globals.batchedUpdates)
+    raf.batchedUpdates = globals.batchedUpdates;
+  if (globals.willAdvance)
+    willAdvance = globals.willAdvance;
+};
+
+var globals = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  get createStringInterpolator () { return createStringInterpolator; },
+  get to () { return to; },
+  get colors () { return colors; },
+  get skipAnimation () { return skipAnimation; },
+  get willAdvance () { return willAdvance; },
+  assign: assign
+});
+
+const startQueue = new Set();
+let currentFrame = [];
+let prevFrame = [];
+let priority = 0;
+const frameLoop = {
+  get idle() {
+    return !startQueue.size && !currentFrame.length;
+  },
+  start(animation) {
+    if (priority > animation.priority) {
+      startQueue.add(animation);
+      raf.onStart(flushStartQueue);
+    } else {
+      startSafely(animation);
+      raf(advance);
+    }
+  },
+  advance,
+  sort(animation) {
+    if (priority) {
+      raf.onFrame(() => frameLoop.sort(animation));
+    } else {
+      const prevIndex = currentFrame.indexOf(animation);
+      if (~prevIndex) {
+        currentFrame.splice(prevIndex, 1);
+        startUnsafely(animation);
+      }
+    }
+  },
+  clear() {
+    currentFrame = [];
+    startQueue.clear();
+  }
+};
+function flushStartQueue() {
+  startQueue.forEach(startSafely);
+  startQueue.clear();
+  raf(advance);
+}
+function startSafely(animation) {
+  if (!currentFrame.includes(animation))
+    startUnsafely(animation);
+}
+function startUnsafely(animation) {
+  currentFrame.splice(findIndex(currentFrame, (other) => other.priority > animation.priority), 0, animation);
+}
+function advance(dt) {
+  const nextFrame = prevFrame;
+  for (let i = 0; i < currentFrame.length; i++) {
+    const animation = currentFrame[i];
+    priority = animation.priority;
+    if (!animation.idle) {
+      willAdvance(animation);
+      animation.advance(dt);
+      if (!animation.idle) {
+        nextFrame.push(animation);
+      }
+    }
+  }
+  priority = 0;
+  prevFrame = currentFrame;
+  prevFrame.length = 0;
+  currentFrame = nextFrame;
+  return currentFrame.length > 0;
+}
+function findIndex(arr, test) {
+  const index = arr.findIndex(test);
+  return index < 0 ? arr.length : index;
+}
+
+const colors$1 = {
+  transparent: 0,
+  aliceblue: 4042850303,
+  antiquewhite: 4209760255,
+  aqua: 16777215,
+  aquamarine: 2147472639,
+  azure: 4043309055,
+  beige: 4126530815,
+  bisque: 4293182719,
+  black: 255,
+  blanchedalmond: 4293643775,
+  blue: 65535,
+  blueviolet: 2318131967,
+  brown: 2771004159,
+  burlywood: 3736635391,
+  burntsienna: 3934150143,
+  cadetblue: 1604231423,
+  chartreuse: 2147418367,
+  chocolate: 3530104575,
+  coral: 4286533887,
+  cornflowerblue: 1687547391,
+  cornsilk: 4294499583,
+  crimson: 3692313855,
+  cyan: 16777215,
+  darkblue: 35839,
+  darkcyan: 9145343,
+  darkgoldenrod: 3095792639,
+  darkgray: 2846468607,
+  darkgreen: 6553855,
+  darkgrey: 2846468607,
+  darkkhaki: 3182914559,
+  darkmagenta: 2332068863,
+  darkolivegreen: 1433087999,
+  darkorange: 4287365375,
+  darkorchid: 2570243327,
+  darkred: 2332033279,
+  darksalmon: 3918953215,
+  darkseagreen: 2411499519,
+  darkslateblue: 1211993087,
+  darkslategray: 793726975,
+  darkslategrey: 793726975,
+  darkturquoise: 13554175,
+  darkviolet: 2483082239,
+  deeppink: 4279538687,
+  deepskyblue: 12582911,
+  dimgray: 1768516095,
+  dimgrey: 1768516095,
+  dodgerblue: 512819199,
+  firebrick: 2988581631,
+  floralwhite: 4294635775,
+  forestgreen: 579543807,
+  fuchsia: 4278255615,
+  gainsboro: 3705462015,
+  ghostwhite: 4177068031,
+  gold: 4292280575,
+  goldenrod: 3668254975,
+  gray: 2155905279,
+  green: 8388863,
+  greenyellow: 2919182335,
+  grey: 2155905279,
+  honeydew: 4043305215,
+  hotpink: 4285117695,
+  indianred: 3445382399,
+  indigo: 1258324735,
+  ivory: 4294963455,
+  khaki: 4041641215,
+  lavender: 3873897215,
+  lavenderblush: 4293981695,
+  lawngreen: 2096890111,
+  lemonchiffon: 4294626815,
+  lightblue: 2916673279,
+  lightcoral: 4034953471,
+  lightcyan: 3774873599,
+  lightgoldenrodyellow: 4210742015,
+  lightgray: 3553874943,
+  lightgreen: 2431553791,
+  lightgrey: 3553874943,
+  lightpink: 4290167295,
+  lightsalmon: 4288707327,
+  lightseagreen: 548580095,
+  lightskyblue: 2278488831,
+  lightslategray: 2005441023,
+  lightslategrey: 2005441023,
+  lightsteelblue: 2965692159,
+  lightyellow: 4294959359,
+  lime: 16711935,
+  limegreen: 852308735,
+  linen: 4210091775,
+  magenta: 4278255615,
+  maroon: 2147483903,
+  mediumaquamarine: 1724754687,
+  mediumblue: 52735,
+  mediumorchid: 3126187007,
+  mediumpurple: 2473647103,
+  mediumseagreen: 1018393087,
+  mediumslateblue: 2070474495,
+  mediumspringgreen: 16423679,
+  mediumturquoise: 1221709055,
+  mediumvioletred: 3340076543,
+  midnightblue: 421097727,
+  mintcream: 4127193855,
+  mistyrose: 4293190143,
+  moccasin: 4293178879,
+  navajowhite: 4292783615,
+  navy: 33023,
+  oldlace: 4260751103,
+  olive: 2155872511,
+  olivedrab: 1804477439,
+  orange: 4289003775,
+  orangered: 4282712319,
+  orchid: 3664828159,
+  palegoldenrod: 4008225535,
+  palegreen: 2566625535,
+  paleturquoise: 2951671551,
+  palevioletred: 3681588223,
+  papayawhip: 4293907967,
+  peachpuff: 4292524543,
+  peru: 3448061951,
+  pink: 4290825215,
+  plum: 3718307327,
+  powderblue: 2967529215,
+  purple: 2147516671,
+  rebeccapurple: 1714657791,
+  red: 4278190335,
+  rosybrown: 3163525119,
+  royalblue: 1097458175,
+  saddlebrown: 2336560127,
+  salmon: 4202722047,
+  sandybrown: 4104413439,
+  seagreen: 780883967,
+  seashell: 4294307583,
+  sienna: 2689740287,
+  silver: 3233857791,
+  skyblue: 2278484991,
+  slateblue: 1784335871,
+  slategray: 1887473919,
+  slategrey: 1887473919,
+  snow: 4294638335,
+  springgreen: 16744447,
+  steelblue: 1182971135,
+  tan: 3535047935,
+  teal: 8421631,
+  thistle: 3636451583,
+  tomato: 4284696575,
+  turquoise: 1088475391,
+  violet: 4001558271,
+  wheat: 4125012991,
+  white: 4294967295,
+  whitesmoke: 4126537215,
+  yellow: 4294902015,
+  yellowgreen: 2597139199
+};
+
+const NUMBER = "[-+]?\\d*\\.?\\d+";
+const PERCENTAGE = NUMBER + "%";
+function call(...parts) {
+  return "\\(\\s*(" + parts.join(")\\s*,\\s*(") + ")\\s*\\)";
+}
+const rgb = new RegExp("rgb" + call(NUMBER, NUMBER, NUMBER));
+const rgba = new RegExp("rgba" + call(NUMBER, NUMBER, NUMBER, NUMBER));
+const hsl = new RegExp("hsl" + call(NUMBER, PERCENTAGE, PERCENTAGE));
+const hsla = new RegExp("hsla" + call(NUMBER, PERCENTAGE, PERCENTAGE, NUMBER));
+const hex3 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
+const hex4 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
+const hex6 = /^#([0-9a-fA-F]{6})$/;
+const hex8 = /^#([0-9a-fA-F]{8})$/;
+
+function normalizeColor(color) {
+  let match;
+  if (typeof color === "number") {
+    return color >>> 0 === color && color >= 0 && color <= 4294967295 ? color : null;
+  }
+  if (match = hex6.exec(color))
+    return parseInt(match[1] + "ff", 16) >>> 0;
+  if (colors && colors[color] !== void 0) {
+    return colors[color];
+  }
+  if (match = rgb.exec(color)) {
+    return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | 255) >>> 0;
+  }
+  if (match = rgba.exec(color)) {
+    return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | parse1(match[4])) >>> 0;
+  }
+  if (match = hex3.exec(color)) {
+    return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + "ff", 16) >>> 0;
+  }
+  if (match = hex8.exec(color))
+    return parseInt(match[1], 16) >>> 0;
+  if (match = hex4.exec(color)) {
+    return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + match[4] + match[4], 16) >>> 0;
+  }
+  if (match = hsl.exec(color)) {
+    return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | 255) >>> 0;
+  }
+  if (match = hsla.exec(color)) {
+    return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | parse1(match[4])) >>> 0;
+  }
+  return null;
+}
+function hue2rgb(p, q, t) {
+  if (t < 0)
+    t += 1;
+  if (t > 1)
+    t -= 1;
+  if (t < 1 / 6)
+    return p + (q - p) * 6 * t;
+  if (t < 1 / 2)
+    return q;
+  if (t < 2 / 3)
+    return p + (q - p) * (2 / 3 - t) * 6;
+  return p;
+}
+function hslToRgb(h, s, l) {
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  const r = hue2rgb(p, q, h + 1 / 3);
+  const g = hue2rgb(p, q, h);
+  const b = hue2rgb(p, q, h - 1 / 3);
+  return Math.round(r * 255) << 24 | Math.round(g * 255) << 16 | Math.round(b * 255) << 8;
+}
+function parse255(str) {
+  const int = parseInt(str, 10);
+  if (int < 0)
+    return 0;
+  if (int > 255)
+    return 255;
+  return int;
+}
+function parse360(str) {
+  const int = parseFloat(str);
+  return (int % 360 + 360) % 360 / 360;
+}
+function parse1(str) {
+  const num = parseFloat(str);
+  if (num < 0)
+    return 0;
+  if (num > 1)
+    return 255;
+  return Math.round(num * 255);
+}
+function parsePercentage(str) {
+  const int = parseFloat(str);
+  if (int < 0)
+    return 0;
+  if (int > 100)
+    return 1;
+  return int / 100;
+}
+
+function colorToRgba(input) {
+  let int32Color = normalizeColor(input);
+  if (int32Color === null)
+    return input;
+  int32Color = int32Color || 0;
+  let r = (int32Color & 4278190080) >>> 24;
+  let g = (int32Color & 16711680) >>> 16;
+  let b = (int32Color & 65280) >>> 8;
+  let a = (int32Color & 255) / 255;
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
+const createInterpolator = (range, output, extrapolate) => {
+  if (is.fun(range)) {
+    return range;
+  }
+  if (is.arr(range)) {
+    return createInterpolator({
+      range,
+      output,
+      extrapolate
+    });
+  }
+  if (is.str(range.output[0])) {
+    return createStringInterpolator(range);
+  }
+  const config = range;
+  const outputRange = config.output;
+  const inputRange = config.range || [0, 1];
+  const extrapolateLeft = config.extrapolateLeft || config.extrapolate || "extend";
+  const extrapolateRight = config.extrapolateRight || config.extrapolate || "extend";
+  const easing = config.easing || ((t) => t);
+  return (input) => {
+    const range2 = findRange(input, inputRange);
+    return interpolate(input, inputRange[range2], inputRange[range2 + 1], outputRange[range2], outputRange[range2 + 1], easing, extrapolateLeft, extrapolateRight, config.map);
+  };
+};
+function interpolate(input, inputMin, inputMax, outputMin, outputMax, easing, extrapolateLeft, extrapolateRight, map) {
+  let result = map ? map(input) : input;
+  if (result < inputMin) {
+    if (extrapolateLeft === "identity")
+      return result;
+    else if (extrapolateLeft === "clamp")
+      result = inputMin;
+  }
+  if (result > inputMax) {
+    if (extrapolateRight === "identity")
+      return result;
+    else if (extrapolateRight === "clamp")
+      result = inputMax;
+  }
+  if (outputMin === outputMax)
+    return outputMin;
+  if (inputMin === inputMax)
+    return input <= inputMin ? outputMin : outputMax;
+  if (inputMin === -Infinity)
+    result = -result;
+  else if (inputMax === Infinity)
+    result = result - inputMin;
+  else
+    result = (result - inputMin) / (inputMax - inputMin);
+  result = easing(result);
+  if (outputMin === -Infinity)
+    result = -result;
+  else if (outputMax === Infinity)
+    result = result + outputMin;
+  else
+    result = result * (outputMax - outputMin) + outputMin;
+  return result;
+}
+function findRange(input, inputRange) {
+  for (var i = 1; i < inputRange.length - 1; ++i)
+    if (inputRange[i] >= input)
+      break;
+  return i - 1;
+}
+
+const $get = Symbol.for("FluidValue.get");
+const $observers = Symbol.for("FluidValue.observers");
+const hasFluidValue = (arg) => Boolean(arg && arg[$get]);
+const getFluidValue = (arg) => arg && arg[$get] ? arg[$get]() : arg;
+const getFluidObservers = (target) => target[$observers] || null;
+function callFluidObserver(observer, event) {
+  if (observer.eventObserved) {
+    observer.eventObserved(event);
+  } else {
+    observer(event);
+  }
+}
+function callFluidObservers(target, event) {
+  let observers = target[$observers];
+  if (observers) {
+    observers.forEach((observer) => {
+      callFluidObserver(observer, event);
+    });
+  }
+}
+class FluidValue {
+  constructor(get) {
+    if (!get && !(get = this.get)) {
+      throw Error("Unknown getter");
+    }
+    setFluidGetter(this, get);
+  }
+}
+const setFluidGetter = (target, get) => setHidden(target, $get, get);
+function addFluidObserver(target, observer) {
+  if (target[$get]) {
+    let observers = target[$observers];
+    if (!observers) {
+      setHidden(target, $observers, observers = new Set());
+    }
+    if (!observers.has(observer)) {
+      observers.add(observer);
+      if (target.observerAdded) {
+        target.observerAdded(observers.size, observer);
+      }
+    }
+  }
+  return observer;
+}
+function removeFluidObserver(target, observer) {
+  let observers = target[$observers];
+  if (observers && observers.has(observer)) {
+    const count = observers.size - 1;
+    if (count) {
+      observers.delete(observer);
+    } else {
+      target[$observers] = null;
+    }
+    if (target.observerRemoved) {
+      target.observerRemoved(count, observer);
+    }
+  }
+}
+const setHidden = (target, key, value) => Object.defineProperty(target, key, {
+  value,
+  writable: true,
+  configurable: true
+});
+
+const numberRegex = /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
+const colorRegex = /(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))/gi;
+let namedColorRegex;
+const rgbaRegex = /rgba\(([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+)\)/gi;
+const rgbaRound = (_, p1, p2, p3, p4) => `rgba(${Math.round(p1)}, ${Math.round(p2)}, ${Math.round(p3)}, ${p4})`;
+const createStringInterpolator$1 = (config) => {
+  if (!namedColorRegex)
+    namedColorRegex = colors ? new RegExp(`(${Object.keys(colors).join("|")})`, "g") : /^\b$/;
+  const output = config.output.map((value) => getFluidValue(value).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba));
+  const keyframes = output.map((value) => value.match(numberRegex).map(Number));
+  const outputRanges = keyframes[0].map((_, i) => keyframes.map((values) => {
+    if (!(i in values)) {
+      throw Error('The arity of each "output" value must be equal');
+    }
+    return values[i];
+  }));
+  const interpolators = outputRanges.map((output2) => createInterpolator({...config, output: output2}));
+  return (input) => {
+    let i = 0;
+    return output[0].replace(numberRegex, () => String(interpolators[i++](input))).replace(rgbaRegex, rgbaRound);
+  };
+};
+
+const prefix = "react-spring: ";
+const once = (fn) => {
+  const func = fn;
+  let called = false;
+  if (typeof func != "function") {
+    throw new TypeError(`${prefix}once requires a function parameter`);
+  }
+  return (...args) => {
+    if (!called) {
+      func(...args);
+      called = true;
+    }
+  };
+};
+const warnInterpolate = once(console.warn);
+function deprecateInterpolate() {
+  warnInterpolate(`${prefix}The "interpolate" function is deprecated in v9 (use "to" instead)`);
+}
+const warnDirectCall = once(console.warn);
+function deprecateDirectCall() {
+  warnDirectCall(`${prefix}Directly calling start instead of using the api object is deprecated in v9 (use ".start" instead)`);
+}
+
+function isAnimatedString(value) {
+  return is.str(value) && (value[0] == "#" || /\d/.test(value) || value in (colors || {}));
+}
+
+const useOnce = (effect) => useEffect(effect, emptyDeps);
+const emptyDeps = [];
+
+function useForceUpdate() {
+  const update = useState()[1];
+  const mounted = useState(makeMountedRef)[0];
+  useOnce(mounted.unmount);
+  return () => {
+    if (mounted.current) {
+      update({});
+    }
+  };
+}
+function makeMountedRef() {
+  const mounted = {
+    current: true,
+    unmount: () => () => {
+      mounted.current = false;
+    }
+  };
+  return mounted;
+}
+
+function useMemoOne(getResult, inputs) {
+  const [initial] = useState(() => ({
+    inputs,
+    result: getResult()
+  }));
+  const committed = useRef();
+  const prevCache = committed.current;
+  let cache = prevCache;
+  if (cache) {
+    const useCache = Boolean(inputs && cache.inputs && areInputsEqual(inputs, cache.inputs));
+    if (!useCache) {
+      cache = {
+        inputs,
+        result: getResult()
+      };
+    }
+  } else {
+    cache = initial;
+  }
+  useEffect(() => {
+    committed.current = cache;
+    if (prevCache == initial) {
+      initial.inputs = initial.result = void 0;
+    }
+  }, [cache]);
+  return cache.result;
+}
+function areInputsEqual(next, prev) {
+  if (next.length !== prev.length) {
+    return false;
+  }
+  for (let i = 0; i < next.length; i++) {
+    if (next[i] !== prev[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function usePrev(value) {
+  const prevRef = useRef();
+  useEffect(() => {
+    prevRef.current = value;
+  });
+  return prevRef.current;
+}
+
+const useLayoutEffect = typeof window !== "undefined" && window.document && window.document.createElement ? useLayoutEffect$1 : useEffect;
+
+const $node = Symbol.for("Animated:node");
+const isAnimated = (value) => !!value && value[$node] === value;
+const getAnimated = (owner) => owner && owner[$node];
+const setAnimated = (owner, node) => defineHidden(owner, $node, node);
+const getPayload = (owner) => owner && owner[$node] && owner[$node].getPayload();
+class Animated {
+  constructor() {
+    setAnimated(this, this);
+  }
+  getPayload() {
+    return this.payload || [];
+  }
+}
+
+class AnimatedValue extends Animated {
+  constructor(_value) {
+    super();
+    this._value = _value;
+    this.done = true;
+    this.durationProgress = 0;
+    if (is.num(this._value)) {
+      this.lastPosition = this._value;
+    }
+  }
+  static create(value) {
+    return new AnimatedValue(value);
+  }
+  getPayload() {
+    return [this];
+  }
+  getValue() {
+    return this._value;
+  }
+  setValue(value, step) {
+    if (is.num(value)) {
+      this.lastPosition = value;
+      if (step) {
+        value = Math.round(value / step) * step;
+        if (this.done) {
+          this.lastPosition = value;
+        }
+      }
+    }
+    if (this._value === value) {
+      return false;
+    }
+    this._value = value;
+    return true;
+  }
+  reset() {
+    const {done} = this;
+    this.done = false;
+    if (is.num(this._value)) {
+      this.elapsedTime = 0;
+      this.durationProgress = 0;
+      this.lastPosition = this._value;
+      if (done)
+        this.lastVelocity = null;
+      this.v0 = null;
+    }
+  }
+}
+
+class AnimatedString extends AnimatedValue {
+  constructor(value) {
+    super(0);
+    this._string = null;
+    this._toString = createInterpolator({
+      output: [value, value]
+    });
+  }
+  static create(value) {
+    return new AnimatedString(value);
+  }
+  getValue() {
+    let value = this._string;
+    return value == null ? this._string = this._toString(this._value) : value;
+  }
+  setValue(value) {
+    if (is.str(value)) {
+      if (value == this._string) {
+        return false;
+      }
+      this._string = value;
+      this._value = 1;
+    } else if (super.setValue(value)) {
+      this._string = null;
+    } else {
+      return false;
+    }
+    return true;
+  }
+  reset(goal) {
+    if (goal) {
+      this._toString = createInterpolator({
+        output: [this.getValue(), goal]
+      });
+    }
+    this._value = 0;
+    super.reset();
+  }
+}
+
+const TreeContext = {dependencies: null};
+
+class AnimatedObject extends Animated {
+  constructor(source) {
+    super();
+    this.source = source;
+    this.setValue(source);
+  }
+  getValue(animated) {
+    const values = {};
+    eachProp(this.source, (source, key) => {
+      if (isAnimated(source)) {
+        values[key] = source.getValue(animated);
+      } else if (hasFluidValue(source)) {
+        values[key] = getFluidValue(source);
+      } else if (!animated) {
+        values[key] = source;
+      }
+    });
+    return values;
+  }
+  setValue(source) {
+    this.source = source;
+    this.payload = this._makePayload(source);
+  }
+  reset() {
+    if (this.payload) {
+      each(this.payload, (node) => node.reset());
+    }
+  }
+  _makePayload(source) {
+    if (source) {
+      const payload = new Set();
+      eachProp(source, this._addToPayload, payload);
+      return Array.from(payload);
+    }
+  }
+  _addToPayload(source) {
+    if (TreeContext.dependencies && hasFluidValue(source)) {
+      TreeContext.dependencies.add(source);
+    }
+    const payload = getPayload(source);
+    if (payload) {
+      each(payload, (node) => this.add(node));
+    }
+  }
+}
+
+class AnimatedArray extends AnimatedObject {
+  constructor(source) {
+    super(source);
+  }
+  static create(source) {
+    return new AnimatedArray(source);
+  }
+  getValue() {
+    return this.source.map((node) => node.getValue());
+  }
+  setValue(source) {
+    const payload = this.getPayload();
+    if (source.length == payload.length) {
+      return payload.some((node, i) => node.setValue(source[i]));
+    }
+    super.setValue(source.map(makeAnimated));
+    return true;
+  }
+}
+function makeAnimated(value) {
+  const nodeType = isAnimatedString(value) ? AnimatedString : AnimatedValue;
+  return nodeType.create(value);
+}
+
+function getAnimatedType(value) {
+  const parentNode = getAnimated(value);
+  return parentNode ? parentNode.constructor : is.arr(value) ? AnimatedArray : isAnimatedString(value) ? AnimatedString : AnimatedValue;
+}
+
+const withAnimated = (Component, host) => {
+  const hasInstance = !is.fun(Component) || Component.prototype && Component.prototype.isReactComponent;
+  return forwardRef((givenProps, givenRef) => {
+    const instanceRef = useRef(null);
+    const ref = hasInstance && useCallback((value) => {
+      instanceRef.current = updateRef(givenRef, value);
+    }, [givenRef]);
+    const [props, deps] = getAnimatedState(givenProps, host);
+    const forceUpdate = useForceUpdate();
+    const callback = () => {
+      const instance = instanceRef.current;
+      if (hasInstance && !instance) {
+        return;
+      }
+      const didUpdate = instance ? host.applyAnimatedValues(instance, props.getValue(true)) : false;
+      if (didUpdate === false) {
+        forceUpdate();
+      }
+    };
+    const observer = new PropsObserver(callback, deps);
+    const observerRef = useRef();
+    useLayoutEffect(() => {
+      const lastObserver = observerRef.current;
+      observerRef.current = observer;
+      each(deps, (dep) => addFluidObserver(dep, observer));
+      if (lastObserver) {
+        each(lastObserver.deps, (dep) => removeFluidObserver(dep, lastObserver));
+        raf.cancel(lastObserver.update);
+      }
+    });
+    useEffect(callback, []);
+    useOnce(() => () => {
+      const observer2 = observerRef.current;
+      each(observer2.deps, (dep) => removeFluidObserver(dep, observer2));
+    });
+    const usedProps = host.getComponentProps(props.getValue());
+    return /* @__PURE__ */ createElement(Component, {
+      ...usedProps,
+      ref
+    });
+  });
+};
+class PropsObserver {
+  constructor(update, deps) {
+    this.update = update;
+    this.deps = deps;
+  }
+  eventObserved(event) {
+    if (event.type == "change") {
+      raf.write(this.update);
+    }
+  }
+}
+function getAnimatedState(props, host) {
+  const dependencies = new Set();
+  TreeContext.dependencies = dependencies;
+  if (props.style)
+    props = {
+      ...props,
+      style: host.createAnimatedStyle(props.style)
+    };
+  props = new AnimatedObject(props);
+  TreeContext.dependencies = null;
+  return [props, dependencies];
+}
+function updateRef(ref, value) {
+  if (ref) {
+    if (is.fun(ref))
+      ref(value);
+    else
+      ref.current = value;
+  }
+  return value;
+}
+
+const cacheKey = Symbol.for("AnimatedComponent");
+const createHost = (components, {
+  applyAnimatedValues = () => false,
+  createAnimatedStyle = (style) => new AnimatedObject(style),
+  getComponentProps = (props) => props
+} = {}) => {
+  const hostConfig = {
+    applyAnimatedValues,
+    createAnimatedStyle,
+    getComponentProps
+  };
+  const animated = (Component) => {
+    const displayName = getDisplayName(Component) || "Anonymous";
+    if (is.str(Component)) {
+      Component = animated[Component] || (animated[Component] = withAnimated(Component, hostConfig));
+    } else {
+      Component = Component[cacheKey] || (Component[cacheKey] = withAnimated(Component, hostConfig));
+    }
+    Component.displayName = `Animated(${displayName})`;
+    return Component;
+  };
+  eachProp(components, (Component, key) => {
+    if (is.arr(components)) {
+      key = getDisplayName(Component);
+    }
+    animated[key] = animated(Component);
+  });
+  return {
+    animated
+  };
+};
+const getDisplayName = (arg) => is.str(arg) ? arg : arg && is.str(arg.displayName) ? arg.displayName : is.fun(arg) && arg.name || null;
+
+function callProp(value, ...args) {
+  return is.fun(value) ? value(...args) : value;
+}
+const matchProp = (value, key) => value === true || !!(key && value && (is.fun(value) ? value(key) : toArray(value).includes(key)));
+const resolveProp = (prop, key) => is.obj(prop) ? key && prop[key] : prop;
+const getDefaultProp = (props, key) => props.default === true ? props[key] : props.default ? props.default[key] : void 0;
+const noopTransform = (value) => value;
+const getDefaultProps = (props, transform = noopTransform) => {
+  let keys = DEFAULT_PROPS;
+  if (props.default && props.default !== true) {
+    props = props.default;
+    keys = Object.keys(props);
+  }
+  const defaults = {};
+  for (const key of keys) {
+    const value = transform(props[key], key);
+    if (!is.und(value)) {
+      defaults[key] = value;
+    }
+  }
+  return defaults;
+};
+const DEFAULT_PROPS = [
+  "config",
+  "onProps",
+  "onStart",
+  "onChange",
+  "onPause",
+  "onResume",
+  "onRest"
+];
+const RESERVED_PROPS = {
+  config: 1,
+  from: 1,
+  to: 1,
+  ref: 1,
+  loop: 1,
+  reset: 1,
+  pause: 1,
+  cancel: 1,
+  reverse: 1,
+  immediate: 1,
+  default: 1,
+  delay: 1,
+  onProps: 1,
+  onStart: 1,
+  onChange: 1,
+  onPause: 1,
+  onResume: 1,
+  onRest: 1,
+  onResolve: 1,
+  items: 1,
+  trail: 1,
+  sort: 1,
+  expires: 1,
+  initial: 1,
+  enter: 1,
+  update: 1,
+  leave: 1,
+  children: 1,
+  onDestroyed: 1,
+  keys: 1,
+  callId: 1,
+  parentId: 1
+};
+function getForwardProps(props) {
+  const forward = {};
+  let count = 0;
+  eachProp(props, (value, prop) => {
+    if (!RESERVED_PROPS[prop]) {
+      forward[prop] = value;
+      count++;
+    }
+  });
+  if (count) {
+    return forward;
+  }
+}
+function inferTo(props) {
+  const to = getForwardProps(props);
+  if (to) {
+    const out = {to};
+    eachProp(props, (val, key) => key in to || (out[key] = val));
+    return out;
+  }
+  return {...props};
+}
+function computeGoal(value) {
+  value = getFluidValue(value);
+  return is.arr(value) ? value.map(computeGoal) : isAnimatedString(value) ? globals.createStringInterpolator({
+    range: [0, 1],
+    output: [value, value]
+  })(1) : value;
+}
+function hasProps(props) {
+  for (const _ in props)
+    return true;
+  return false;
+}
+function isAsyncTo(to) {
+  return is.fun(to) || is.arr(to) && is.obj(to[0]);
+}
+function detachRefs(ctrl, ref) {
+  var _a;
+  (_a = ctrl.ref) == null ? void 0 : _a.delete(ctrl);
+  ref == null ? void 0 : ref.delete(ctrl);
+}
+function replaceRef(ctrl, ref) {
+  var _a;
+  if (ref && ctrl.ref !== ref) {
+    (_a = ctrl.ref) == null ? void 0 : _a.delete(ctrl);
+    ref.add(ctrl);
+    ctrl.ref = ref;
+  }
+}
+
+const config = {
+  default: {tension: 170, friction: 26},
+  gentle: {tension: 120, friction: 14},
+  wobbly: {tension: 180, friction: 12},
+  stiff: {tension: 210, friction: 20},
+  slow: {tension: 280, friction: 60},
+  molasses: {tension: 280, friction: 120}
+};
+
+const linear = (t) => t;
+const defaults = {
+  ...config.default,
+  mass: 1,
+  damping: 1,
+  easing: linear,
+  clamp: false
+};
+class AnimationConfig {
+  constructor() {
+    this.velocity = 0;
+    Object.assign(this, defaults);
+  }
+}
+function mergeConfig(config, newConfig, defaultConfig) {
+  if (defaultConfig) {
+    defaultConfig = {...defaultConfig};
+    sanitizeConfig(defaultConfig, newConfig);
+    newConfig = {...defaultConfig, ...newConfig};
+  }
+  sanitizeConfig(config, newConfig);
+  Object.assign(config, newConfig);
+  for (const key in defaults) {
+    if (config[key] == null) {
+      config[key] = defaults[key];
+    }
+  }
+  let {mass, frequency, damping} = config;
+  if (!is.und(frequency)) {
+    if (frequency < 0.01)
+      frequency = 0.01;
+    if (damping < 0)
+      damping = 0;
+    config.tension = Math.pow(2 * Math.PI / frequency, 2) * mass;
+    config.friction = 4 * Math.PI * damping * mass / frequency;
+  }
+  return config;
+}
+function sanitizeConfig(config, props) {
+  if (!is.und(props.decay)) {
+    config.duration = void 0;
+  } else {
+    const isTensionConfig = !is.und(props.tension) || !is.und(props.friction);
+    if (isTensionConfig || !is.und(props.frequency) || !is.und(props.damping) || !is.und(props.mass)) {
+      config.duration = void 0;
+      config.decay = void 0;
+    }
+    if (isTensionConfig) {
+      config.frequency = void 0;
+    }
+  }
+}
+
+const emptyArray = [];
+class Animation {
+  constructor() {
+    this.changed = false;
+    this.values = emptyArray;
+    this.toValues = null;
+    this.fromValues = emptyArray;
+    this.config = new AnimationConfig();
+    this.immediate = false;
+  }
+}
+
+function scheduleProps(callId, {key, props, defaultProps, state, actions}) {
+  return new Promise((resolve, reject) => {
+    var _a;
+    let delay;
+    let timeout;
+    let cancel = matchProp((_a = props.cancel) != null ? _a : defaultProps == null ? void 0 : defaultProps.cancel, key);
+    if (cancel) {
+      onStart();
+    } else {
+      if (!is.und(props.pause)) {
+        state.paused = matchProp(props.pause, key);
+      }
+      let pause = defaultProps == null ? void 0 : defaultProps.pause;
+      if (pause !== true) {
+        pause = state.paused || matchProp(pause, key);
+      }
+      delay = callProp(props.delay || 0, key);
+      if (pause) {
+        state.resumeQueue.add(onResume);
+        actions.pause();
+      } else {
+        actions.resume();
+        onResume();
+      }
+    }
+    function onPause() {
+      state.resumeQueue.add(onResume);
+      state.timeouts.delete(timeout);
+      timeout.cancel();
+      delay = timeout.time - raf.now();
+    }
+    function onResume() {
+      if (delay > 0) {
+        timeout = raf.setTimeout(onStart, delay);
+        state.pauseQueue.add(onPause);
+        state.timeouts.add(timeout);
+      } else {
+        onStart();
+      }
+    }
+    function onStart() {
+      state.pauseQueue.delete(onPause);
+      state.timeouts.delete(timeout);
+      if (callId <= (state.cancelId || 0)) {
+        cancel = true;
+      }
+      try {
+        actions.start({...props, callId, cancel}, resolve);
+      } catch (err) {
+        reject(err);
+      }
+    }
+  });
+}
+
+const getCombinedResult = (target, results) => results.length == 1 ? results[0] : results.some((result) => result.cancelled) ? getCancelledResult(target.get()) : results.every((result) => result.noop) ? getNoopResult(target.get()) : getFinishedResult(target.get(), results.every((result) => result.finished));
+const getNoopResult = (value) => ({
+  value,
+  noop: true,
+  finished: true,
+  cancelled: false
+});
+const getFinishedResult = (value, finished, cancelled = false) => ({
+  value,
+  finished,
+  cancelled
+});
+const getCancelledResult = (value) => ({
+  value,
+  cancelled: true,
+  finished: false
+});
+
+function runAsync(to, props, state, target) {
+  const {callId, parentId, onRest} = props;
+  const {asyncTo: prevTo, promise: prevPromise} = state;
+  if (!parentId && to === prevTo && !props.reset) {
+    return prevPromise;
+  }
+  return state.promise = (async () => {
+    state.asyncId = callId;
+    state.asyncTo = to;
+    const defaultProps = getDefaultProps(props, (value, key) => key === "onRest" ? void 0 : value);
+    let preventBail;
+    let bail;
+    const bailPromise = new Promise((resolve, reject) => (preventBail = resolve, bail = reject));
+    const bailIfEnded = (bailSignal) => {
+      const bailResult = callId <= (state.cancelId || 0) && getCancelledResult(target) || callId !== state.asyncId && getFinishedResult(target, false);
+      if (bailResult) {
+        bailSignal.result = bailResult;
+        bail(bailSignal);
+        throw bailSignal;
+      }
+    };
+    const animate = (arg1, arg2) => {
+      const bailSignal = new BailSignal();
+      const skipAnimationSignal = new SkipAniamtionSignal();
+      return (async () => {
+        if (globals.skipAnimation) {
+          stopAsync(state);
+          skipAnimationSignal.result = getFinishedResult(target, false);
+          bail(skipAnimationSignal);
+          throw skipAnimationSignal;
+        }
+        bailIfEnded(bailSignal);
+        const props2 = is.obj(arg1) ? {...arg1} : {...arg2, to: arg1};
+        props2.parentId = callId;
+        eachProp(defaultProps, (value, key) => {
+          if (is.und(props2[key])) {
+            props2[key] = value;
+          }
+        });
+        const result2 = await target.start(props2);
+        bailIfEnded(bailSignal);
+        if (state.paused) {
+          await new Promise((resume) => {
+            state.resumeQueue.add(resume);
+          });
+        }
+        return result2;
+      })();
+    };
+    let result;
+    if (globals.skipAnimation) {
+      stopAsync(state);
+      return getFinishedResult(target, false);
+    }
+    try {
+      let animating;
+      if (is.arr(to)) {
+        animating = (async (queue) => {
+          for (const props2 of queue) {
+            await animate(props2);
+          }
+        })(to);
+      } else {
+        animating = Promise.resolve(to(animate, target.stop.bind(target)));
+      }
+      await Promise.all([animating.then(preventBail), bailPromise]);
+      result = getFinishedResult(target.get(), true, false);
+    } catch (err) {
+      if (err instanceof BailSignal) {
+        result = err.result;
+      } else if (err instanceof SkipAniamtionSignal) {
+        result = err.result;
+      } else {
+        throw err;
+      }
+    } finally {
+      if (callId == state.asyncId) {
+        state.asyncId = parentId;
+        state.asyncTo = parentId ? prevTo : void 0;
+        state.promise = parentId ? prevPromise : void 0;
+      }
+    }
+    if (is.fun(onRest)) {
+      raf.batchedUpdates(() => {
+        onRest(result, target, target.item);
+      });
+    }
+    return result;
+  })();
+}
+function stopAsync(state, cancelId) {
+  flush(state.timeouts, (t) => t.cancel());
+  state.pauseQueue.clear();
+  state.resumeQueue.clear();
+  state.asyncId = state.asyncTo = state.promise = void 0;
+  if (cancelId)
+    state.cancelId = cancelId;
+}
+class BailSignal extends Error {
+  constructor() {
+    super("An async animation has been interrupted. You see this error because you forgot to use `await` or `.catch(...)` on its returned promise.");
+  }
+}
+class SkipAniamtionSignal extends Error {
+  constructor() {
+    super("SkipAnimationSignal");
+  }
+}
+
+const isFrameValue = (value) => value instanceof FrameValue;
+let nextId = 1;
+class FrameValue extends FluidValue {
+  constructor() {
+    super(...arguments);
+    this.id = nextId++;
+    this._priority = 0;
+  }
+  get priority() {
+    return this._priority;
+  }
+  set priority(priority) {
+    if (this._priority != priority) {
+      this._priority = priority;
+      this._onPriorityChange(priority);
+    }
+  }
+  get() {
+    const node = getAnimated(this);
+    return node && node.getValue();
+  }
+  to(...args) {
+    return globals.to(this, args);
+  }
+  interpolate(...args) {
+    deprecateInterpolate();
+    return globals.to(this, args);
+  }
+  toJSON() {
+    return this.get();
+  }
+  observerAdded(count) {
+    if (count == 1)
+      this._attach();
+  }
+  observerRemoved(count) {
+    if (count == 0)
+      this._detach();
+  }
+  _attach() {
+  }
+  _detach() {
+  }
+  _onChange(value, idle = false) {
+    callFluidObservers(this, {
+      type: "change",
+      parent: this,
+      value,
+      idle
+    });
+  }
+  _onPriorityChange(priority) {
+    if (!this.idle) {
+      frameLoop.sort(this);
+    }
+    callFluidObservers(this, {
+      type: "priority",
+      parent: this,
+      priority
+    });
+  }
+}
+
+const $P = Symbol.for("SpringPhase");
+const HAS_ANIMATED = 1;
+const IS_ANIMATING = 2;
+const IS_PAUSED = 4;
+const hasAnimated = (target) => (target[$P] & HAS_ANIMATED) > 0;
+const isAnimating = (target) => (target[$P] & IS_ANIMATING) > 0;
+const isPaused = (target) => (target[$P] & IS_PAUSED) > 0;
+const setActiveBit = (target, active) => active ? target[$P] |= IS_ANIMATING | HAS_ANIMATED : target[$P] &= ~IS_ANIMATING;
+const setPausedBit = (target, paused) => paused ? target[$P] |= IS_PAUSED : target[$P] &= ~IS_PAUSED;
+
+class SpringValue extends FrameValue {
+  constructor(arg1, arg2) {
+    super();
+    this.animation = new Animation();
+    this.defaultProps = {};
+    this._state = {
+      paused: false,
+      pauseQueue: new Set(),
+      resumeQueue: new Set(),
+      timeouts: new Set()
+    };
+    this._pendingCalls = new Set();
+    this._lastCallId = 0;
+    this._lastToId = 0;
+    this._memoizedDuration = 0;
+    if (!is.und(arg1) || !is.und(arg2)) {
+      const props = is.obj(arg1) ? {...arg1} : {...arg2, from: arg1};
+      if (is.und(props.default)) {
+        props.default = true;
+      }
+      this.start(props);
+    }
+  }
+  get idle() {
+    return !(isAnimating(this) || this._state.asyncTo) || isPaused(this);
+  }
+  get goal() {
+    return getFluidValue(this.animation.to);
+  }
+  get velocity() {
+    const node = getAnimated(this);
+    return node instanceof AnimatedValue ? node.lastVelocity || 0 : node.getPayload().map((node2) => node2.lastVelocity || 0);
+  }
+  get hasAnimated() {
+    return hasAnimated(this);
+  }
+  get isAnimating() {
+    return isAnimating(this);
+  }
+  get isPaused() {
+    return isPaused(this);
+  }
+  advance(dt) {
+    let idle = true;
+    let changed = false;
+    const anim = this.animation;
+    let {config, toValues} = anim;
+    const payload = getPayload(anim.to);
+    if (!payload && hasFluidValue(anim.to)) {
+      toValues = toArray(getFluidValue(anim.to));
+    }
+    anim.values.forEach((node2, i) => {
+      if (node2.done)
+        return;
+      const to = node2.constructor == AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues[i];
+      let finished = anim.immediate;
+      let position = to;
+      if (!finished) {
+        position = node2.lastPosition;
+        if (config.tension <= 0) {
+          node2.done = true;
+          return;
+        }
+        let elapsed = node2.elapsedTime += dt;
+        const from = anim.fromValues[i];
+        const v0 = node2.v0 != null ? node2.v0 : node2.v0 = is.arr(config.velocity) ? config.velocity[i] : config.velocity;
+        let velocity;
+        if (!is.und(config.duration)) {
+          let p = 1;
+          if (config.duration > 0) {
+            if (this._memoizedDuration !== config.duration) {
+              this._memoizedDuration = config.duration;
+              if (node2.durationProgress > 0) {
+                node2.elapsedTime = config.duration * node2.durationProgress;
+                elapsed = node2.elapsedTime += dt;
+              }
+            }
+            p = (config.progress || 0) + elapsed / this._memoizedDuration;
+            p = p > 1 ? 1 : p < 0 ? 0 : p;
+            node2.durationProgress = p;
+          }
+          position = from + config.easing(p) * (to - from);
+          velocity = (position - node2.lastPosition) / dt;
+          finished = p == 1;
+        } else if (config.decay) {
+          const decay = config.decay === true ? 0.998 : config.decay;
+          const e = Math.exp(-(1 - decay) * elapsed);
+          position = from + v0 / (1 - decay) * (1 - e);
+          finished = Math.abs(node2.lastPosition - position) < 0.1;
+          velocity = v0 * e;
+        } else {
+          velocity = node2.lastVelocity == null ? v0 : node2.lastVelocity;
+          const precision = config.precision || (from == to ? 5e-3 : Math.min(1, Math.abs(to - from) * 1e-3));
+          const restVelocity = config.restVelocity || precision / 10;
+          const bounceFactor = config.clamp ? 0 : config.bounce;
+          const canBounce = !is.und(bounceFactor);
+          const isGrowing = from == to ? node2.v0 > 0 : from < to;
+          let isMoving;
+          let isBouncing = false;
+          const step = 1;
+          const numSteps = Math.ceil(dt / step);
+          for (let n = 0; n < numSteps; ++n) {
+            isMoving = Math.abs(velocity) > restVelocity;
+            if (!isMoving) {
+              finished = Math.abs(to - position) <= precision;
+              if (finished) {
+                break;
+              }
+            }
+            if (canBounce) {
+              isBouncing = position == to || position > to == isGrowing;
+              if (isBouncing) {
+                velocity = -velocity * bounceFactor;
+                position = to;
+              }
+            }
+            const springForce = -config.tension * 1e-6 * (position - to);
+            const dampingForce = -config.friction * 1e-3 * velocity;
+            const acceleration = (springForce + dampingForce) / config.mass;
+            velocity = velocity + acceleration * step;
+            position = position + velocity * step;
+          }
+        }
+        node2.lastVelocity = velocity;
+        if (Number.isNaN(position)) {
+          console.warn(`Got NaN while animating:`, this);
+          finished = true;
+        }
+      }
+      if (payload && !payload[i].done) {
+        finished = false;
+      }
+      if (finished) {
+        node2.done = true;
+      } else {
+        idle = false;
+      }
+      if (node2.setValue(position, config.round)) {
+        changed = true;
+      }
+    });
+    const node = getAnimated(this);
+    if (idle) {
+      const value = getFluidValue(anim.to);
+      if (node.setValue(value) || changed) {
+        this._onChange(value);
+      }
+      this._stop();
+    } else if (changed) {
+      this._onChange(node.getValue());
+    }
+  }
+  set(value) {
+    raf.batchedUpdates(() => {
+      this._stop();
+      this._focus(value);
+      this._set(value);
+    });
+    return this;
+  }
+  pause() {
+    this._update({pause: true});
+  }
+  resume() {
+    this._update({pause: false});
+  }
+  finish() {
+    if (isAnimating(this)) {
+      const {to, config} = this.animation;
+      raf.batchedUpdates(() => {
+        this._onStart();
+        if (!config.decay) {
+          this._set(to, false);
+        }
+        this._stop();
+      });
+    }
+    return this;
+  }
+  update(props) {
+    const queue = this.queue || (this.queue = []);
+    queue.push(props);
+    return this;
+  }
+  start(to, arg2) {
+    let queue;
+    if (!is.und(to)) {
+      queue = [is.obj(to) ? to : {...arg2, to}];
+    } else {
+      queue = this.queue || [];
+      this.queue = [];
+    }
+    return Promise.all(queue.map((props) => this._update(props))).then((results) => getCombinedResult(this, results));
+  }
+  stop(cancel) {
+    const {to} = this.animation;
+    this._focus(this.get());
+    stopAsync(this._state, cancel && this._lastCallId);
+    raf.batchedUpdates(() => this._stop(to, cancel));
+    return this;
+  }
+  reset() {
+    this._update({reset: true});
+  }
+  eventObserved(event) {
+    if (event.type == "change") {
+      this._start();
+    } else if (event.type == "priority") {
+      this.priority = event.priority + 1;
+    }
+  }
+  _prepareNode(props) {
+    const key = this.key || "";
+    let {to, from} = props;
+    to = is.obj(to) ? to[key] : to;
+    if (to == null || isAsyncTo(to)) {
+      to = void 0;
+    }
+    from = is.obj(from) ? from[key] : from;
+    if (from == null) {
+      from = void 0;
+    }
+    const range = {to, from};
+    if (!hasAnimated(this)) {
+      if (props.reverse)
+        [to, from] = [from, to];
+      from = getFluidValue(from);
+      if (!is.und(from)) {
+        this._set(from);
+      } else if (!getAnimated(this)) {
+        this._set(to);
+      }
+    }
+    return range;
+  }
+  _update({...props}, isLoop) {
+    const {key, defaultProps} = this;
+    if (props.default)
+      Object.assign(defaultProps, getDefaultProps(props, (value, prop) => /^on/.test(prop) ? resolveProp(value, key) : value));
+    mergeActiveFn(this, props, "onProps");
+    sendEvent(this, "onProps", props, this);
+    const range = this._prepareNode(props);
+    if (Object.isFrozen(this)) {
+      throw Error("Cannot animate a `SpringValue` object that is frozen. Did you forget to pass your component to `animated(...)` before animating its props?");
+    }
+    const state = this._state;
+    return scheduleProps(++this._lastCallId, {
+      key,
+      props,
+      defaultProps,
+      state,
+      actions: {
+        pause: () => {
+          if (!isPaused(this)) {
+            setPausedBit(this, true);
+            flushCalls(state.pauseQueue);
+            sendEvent(this, "onPause", getFinishedResult(this, checkFinished(this, this.animation.to)), this);
+          }
+        },
+        resume: () => {
+          if (isPaused(this)) {
+            setPausedBit(this, false);
+            if (isAnimating(this)) {
+              this._resume();
+            }
+            flushCalls(state.resumeQueue);
+            sendEvent(this, "onResume", getFinishedResult(this, checkFinished(this, this.animation.to)), this);
+          }
+        },
+        start: this._merge.bind(this, range)
+      }
+    }).then((result) => {
+      if (props.loop && result.finished && !(isLoop && result.noop)) {
+        const nextProps = createLoopUpdate(props);
+        if (nextProps) {
+          return this._update(nextProps, true);
+        }
+      }
+      return result;
+    });
+  }
+  _merge(range, props, resolve) {
+    if (props.cancel) {
+      this.stop(true);
+      return resolve(getCancelledResult(this));
+    }
+    const hasToProp = !is.und(range.to);
+    const hasFromProp = !is.und(range.from);
+    if (hasToProp || hasFromProp) {
+      if (props.callId > this._lastToId) {
+        this._lastToId = props.callId;
+      } else {
+        return resolve(getCancelledResult(this));
+      }
+    }
+    const {key, defaultProps, animation: anim} = this;
+    const {to: prevTo, from: prevFrom} = anim;
+    let {to = prevTo, from = prevFrom} = range;
+    if (hasFromProp && !hasToProp && (!props.default || is.und(to))) {
+      to = from;
+    }
+    if (props.reverse)
+      [to, from] = [from, to];
+    const hasFromChanged = !isEqual(from, prevFrom);
+    if (hasFromChanged) {
+      anim.from = from;
+    }
+    from = getFluidValue(from);
+    const hasToChanged = !isEqual(to, prevTo);
+    if (hasToChanged) {
+      this._focus(to);
+    }
+    const hasAsyncTo = isAsyncTo(props.to);
+    const {config} = anim;
+    const {decay, velocity} = config;
+    if (hasToProp || hasFromProp) {
+      config.velocity = 0;
+    }
+    if (props.config && !hasAsyncTo) {
+      mergeConfig(config, callProp(props.config, key), props.config !== defaultProps.config ? callProp(defaultProps.config, key) : void 0);
+    }
+    let node = getAnimated(this);
+    if (!node || is.und(to)) {
+      return resolve(getFinishedResult(this, true));
+    }
+    const reset = is.und(props.reset) ? hasFromProp && !props.default : !is.und(from) && matchProp(props.reset, key);
+    const value = reset ? from : this.get();
+    const goal = computeGoal(to);
+    const isAnimatable = is.num(goal) || is.arr(goal) || isAnimatedString(goal);
+    const immediate = !hasAsyncTo && (!isAnimatable || matchProp(defaultProps.immediate || props.immediate, key));
+    if (hasToChanged) {
+      const nodeType = getAnimatedType(to);
+      if (nodeType !== node.constructor) {
+        if (immediate) {
+          node = this._set(goal);
+        } else
+          throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
+      }
+    }
+    const goalType = node.constructor;
+    let started = hasFluidValue(to);
+    let finished = false;
+    if (!started) {
+      const hasValueChanged = reset || !hasAnimated(this) && hasFromChanged;
+      if (hasToChanged || hasValueChanged) {
+        finished = isEqual(computeGoal(value), goal);
+        started = !finished;
+      }
+      if (!isEqual(config.decay, decay) || !isEqual(config.velocity, velocity)) {
+        started = true;
+      }
+    }
+    if (finished && isAnimating(this)) {
+      if (anim.changed && !reset) {
+        started = true;
+      } else if (!started) {
+        this._stop(prevTo);
+      }
+    }
+    if (!hasAsyncTo) {
+      if (started || hasFluidValue(prevTo)) {
+        anim.values = node.getPayload();
+        anim.toValues = hasFluidValue(to) ? null : goalType == AnimatedString ? [1] : toArray(goal);
+      }
+      if (anim.immediate != immediate) {
+        anim.immediate = immediate;
+        if (!immediate && !reset) {
+          this._set(prevTo);
+        }
+      }
+      if (started) {
+        const {onRest} = anim;
+        each(ACTIVE_EVENTS, (type) => mergeActiveFn(this, props, type));
+        const result = getFinishedResult(this, checkFinished(this, prevTo));
+        flushCalls(this._pendingCalls, result);
+        this._pendingCalls.add(resolve);
+        if (anim.changed)
+          raf.batchedUpdates(() => {
+            var _a;
+            anim.changed = !reset;
+            onRest == null ? void 0 : onRest(result, this);
+            if (reset) {
+              callProp(defaultProps.onRest, result);
+            } else {
+              (_a = anim.onStart) == null ? void 0 : _a.call(anim, result, this);
+            }
+          });
+      }
+    }
+    if (reset) {
+      this._set(value);
+    }
+    if (hasAsyncTo) {
+      resolve(runAsync(props.to, props, this._state, this));
+    } else if (started) {
+      this._start();
+    } else if (isAnimating(this) && !hasToChanged) {
+      this._pendingCalls.add(resolve);
+    } else {
+      resolve(getNoopResult(value));
+    }
+  }
+  _focus(value) {
+    const anim = this.animation;
+    if (value !== anim.to) {
+      if (getFluidObservers(this)) {
+        this._detach();
+      }
+      anim.to = value;
+      if (getFluidObservers(this)) {
+        this._attach();
+      }
+    }
+  }
+  _attach() {
+    let priority = 0;
+    const {to} = this.animation;
+    if (hasFluidValue(to)) {
+      addFluidObserver(to, this);
+      if (isFrameValue(to)) {
+        priority = to.priority + 1;
+      }
+    }
+    this.priority = priority;
+  }
+  _detach() {
+    const {to} = this.animation;
+    if (hasFluidValue(to)) {
+      removeFluidObserver(to, this);
+    }
+  }
+  _set(arg, idle = true) {
+    const value = getFluidValue(arg);
+    if (!is.und(value)) {
+      const oldNode = getAnimated(this);
+      if (!oldNode || !isEqual(value, oldNode.getValue())) {
+        const nodeType = getAnimatedType(value);
+        if (!oldNode || oldNode.constructor != nodeType) {
+          setAnimated(this, nodeType.create(value));
+        } else {
+          oldNode.setValue(value);
+        }
+        if (oldNode) {
+          raf.batchedUpdates(() => {
+            this._onChange(value, idle);
+          });
+        }
+      }
+    }
+    return getAnimated(this);
+  }
+  _onStart() {
+    const anim = this.animation;
+    if (!anim.changed) {
+      anim.changed = true;
+      sendEvent(this, "onStart", getFinishedResult(this, checkFinished(this, anim.to)), this);
+    }
+  }
+  _onChange(value, idle) {
+    if (!idle) {
+      this._onStart();
+      callProp(this.animation.onChange, value, this);
+    }
+    callProp(this.defaultProps.onChange, value, this);
+    super._onChange(value, idle);
+  }
+  _start() {
+    const anim = this.animation;
+    getAnimated(this).reset(getFluidValue(anim.to));
+    if (!anim.immediate) {
+      anim.fromValues = anim.values.map((node) => node.lastPosition);
+    }
+    if (!isAnimating(this)) {
+      setActiveBit(this, true);
+      if (!isPaused(this)) {
+        this._resume();
+      }
+    }
+  }
+  _resume() {
+    if (globals.skipAnimation) {
+      this.finish();
+    } else {
+      frameLoop.start(this);
+    }
+  }
+  _stop(goal, cancel) {
+    if (isAnimating(this)) {
+      setActiveBit(this, false);
+      const anim = this.animation;
+      each(anim.values, (node) => {
+        node.done = true;
+      });
+      if (anim.toValues) {
+        anim.onChange = anim.onPause = anim.onResume = void 0;
+      }
+      callFluidObservers(this, {
+        type: "idle",
+        parent: this
+      });
+      const result = cancel ? getCancelledResult(this.get()) : getFinishedResult(this.get(), checkFinished(this, goal != null ? goal : anim.to));
+      flushCalls(this._pendingCalls, result);
+      if (anim.changed) {
+        anim.changed = false;
+        sendEvent(this, "onRest", result, this);
+      }
+    }
+  }
+}
+function checkFinished(target, to) {
+  const goal = computeGoal(to);
+  const value = computeGoal(target.get());
+  return isEqual(value, goal);
+}
+function createLoopUpdate(props, loop = props.loop, to = props.to) {
+  let loopRet = callProp(loop);
+  if (loopRet) {
+    const overrides = loopRet !== true && inferTo(loopRet);
+    const reverse = (overrides || props).reverse;
+    const reset = !overrides || overrides.reset;
+    return createUpdate({
+      ...props,
+      loop,
+      default: false,
+      pause: void 0,
+      to: !reverse || isAsyncTo(to) ? to : void 0,
+      from: reset ? props.from : void 0,
+      reset,
+      ...overrides
+    });
+  }
+}
+function createUpdate(props) {
+  const {to, from} = props = inferTo(props);
+  const keys = new Set();
+  if (is.obj(to))
+    findDefined(to, keys);
+  if (is.obj(from))
+    findDefined(from, keys);
+  props.keys = keys.size ? Array.from(keys) : null;
+  return props;
+}
+function declareUpdate(props) {
+  const update = createUpdate(props);
+  if (is.und(update.default)) {
+    update.default = getDefaultProps(update);
+  }
+  return update;
+}
+function findDefined(values, keys) {
+  eachProp(values, (value, key) => value != null && keys.add(key));
+}
+const ACTIVE_EVENTS = [
+  "onStart",
+  "onRest",
+  "onChange",
+  "onPause",
+  "onResume"
+];
+function mergeActiveFn(target, props, type) {
+  target.animation[type] = props[type] !== getDefaultProp(props, type) ? resolveProp(props[type], target.key) : void 0;
+}
+function sendEvent(target, type, ...args) {
+  var _a, _b, _c, _d;
+  (_b = (_a = target.animation)[type]) == null ? void 0 : _b.call(_a, ...args);
+  (_d = (_c = target.defaultProps)[type]) == null ? void 0 : _d.call(_c, ...args);
+}
+
+const BATCHED_EVENTS = ["onStart", "onChange", "onRest"];
+let nextId$1 = 1;
+class Controller {
+  constructor(props, flush2) {
+    this.id = nextId$1++;
+    this.springs = {};
+    this.queue = [];
+    this._lastAsyncId = 0;
+    this._active = new Set();
+    this._changed = new Set();
+    this._started = false;
+    this._state = {
+      paused: false,
+      pauseQueue: new Set(),
+      resumeQueue: new Set(),
+      timeouts: new Set()
+    };
+    this._events = {
+      onStart: new Map(),
+      onChange: new Map(),
+      onRest: new Map()
+    };
+    this._onFrame = this._onFrame.bind(this);
+    if (flush2) {
+      this._flush = flush2;
+    }
+    if (props) {
+      this.start({default: true, ...props});
+    }
+  }
+  get idle() {
+    return !this._state.asyncTo && Object.values(this.springs).every((spring) => spring.idle);
+  }
+  get item() {
+    return this._item;
+  }
+  set item(item) {
+    this._item = item;
+  }
+  get() {
+    const values = {};
+    this.each((spring, key) => values[key] = spring.get());
+    return values;
+  }
+  set(values) {
+    for (const key in values) {
+      const value = values[key];
+      if (!is.und(value)) {
+        this.springs[key].set(value);
+      }
+    }
+  }
+  update(props) {
+    if (props) {
+      this.queue.push(createUpdate(props));
+    }
+    return this;
+  }
+  start(props) {
+    let {queue} = this;
+    if (props) {
+      queue = toArray(props).map(createUpdate);
+    } else {
+      this.queue = [];
+    }
+    if (this._flush) {
+      return this._flush(this, queue);
+    }
+    prepareKeys(this, queue);
+    return flushUpdateQueue(this, queue);
+  }
+  stop(arg, keys) {
+    if (arg !== !!arg) {
+      keys = arg;
+    }
+    if (keys) {
+      const springs = this.springs;
+      each(toArray(keys), (key) => springs[key].stop(!!arg));
+    } else {
+      stopAsync(this._state, this._lastAsyncId);
+      this.each((spring) => spring.stop(!!arg));
+    }
+    return this;
+  }
+  pause(keys) {
+    if (is.und(keys)) {
+      this.start({pause: true});
+    } else {
+      const springs = this.springs;
+      each(toArray(keys), (key) => springs[key].pause());
+    }
+    return this;
+  }
+  resume(keys) {
+    if (is.und(keys)) {
+      this.start({pause: false});
+    } else {
+      const springs = this.springs;
+      each(toArray(keys), (key) => springs[key].resume());
+    }
+    return this;
+  }
+  each(iterator) {
+    eachProp(this.springs, iterator);
+  }
+  _onFrame() {
+    const {onStart, onChange, onRest} = this._events;
+    const active = this._active.size > 0;
+    const changed = this._changed.size > 0;
+    if (active && !this._started || changed && !this._started) {
+      this._started = true;
+      flush(onStart, ([onStart2, result]) => {
+        result.value = this.get();
+        onStart2(result, this, this._item);
+      });
+    }
+    const idle = !active && this._started;
+    const values = changed || idle && onRest.size ? this.get() : null;
+    if (changed && onChange.size) {
+      flush(onChange, ([onChange2, result]) => {
+        result.value = values;
+        onChange2(result, this, this._item);
+      });
+    }
+    if (idle) {
+      this._started = false;
+      flush(onRest, ([onRest2, result]) => {
+        result.value = values;
+        onRest2(result, this, this._item);
+      });
+    }
+  }
+  eventObserved(event) {
+    if (event.type == "change") {
+      this._changed.add(event.parent);
+      if (!event.idle) {
+        this._active.add(event.parent);
+      }
+    } else if (event.type == "idle") {
+      this._active.delete(event.parent);
+    } else
+      return;
+    raf.onFrame(this._onFrame);
+  }
+}
+function flushUpdateQueue(ctrl, queue) {
+  return Promise.all(queue.map((props) => flushUpdate(ctrl, props))).then((results) => getCombinedResult(ctrl, results));
+}
+async function flushUpdate(ctrl, props, isLoop) {
+  const {keys, to, from, loop, onRest, onResolve} = props;
+  const defaults = is.obj(props.default) && props.default;
+  if (loop) {
+    props.loop = false;
+  }
+  if (to === false)
+    props.to = null;
+  if (from === false)
+    props.from = null;
+  const asyncTo = is.arr(to) || is.fun(to) ? to : void 0;
+  if (asyncTo) {
+    props.to = void 0;
+    props.onRest = void 0;
+    if (defaults) {
+      defaults.onRest = void 0;
+    }
+  } else {
+    each(BATCHED_EVENTS, (key) => {
+      const handler = props[key];
+      if (is.fun(handler)) {
+        const queue = ctrl["_events"][key];
+        props[key] = ({finished, cancelled}) => {
+          const result2 = queue.get(handler);
+          if (result2) {
+            if (!finished)
+              result2.finished = false;
+            if (cancelled)
+              result2.cancelled = true;
+          } else {
+            queue.set(handler, {
+              value: null,
+              finished: finished || false,
+              cancelled: cancelled || false
+            });
+          }
+        };
+        if (defaults) {
+          defaults[key] = props[key];
+        }
+      }
+    });
+  }
+  const state = ctrl["_state"];
+  if (props.pause === !state.paused) {
+    state.paused = props.pause;
+    flushCalls(props.pause ? state.pauseQueue : state.resumeQueue);
+  } else if (state.paused) {
+    props.pause = true;
+  }
+  const promises = (keys || Object.keys(ctrl.springs)).map((key) => ctrl.springs[key].start(props));
+  const cancel = props.cancel === true || getDefaultProp(props, "cancel") === true;
+  if (asyncTo || cancel && state.asyncId) {
+    promises.push(scheduleProps(++ctrl["_lastAsyncId"], {
+      props,
+      state,
+      actions: {
+        pause: noop,
+        resume: noop,
+        start(props2, resolve) {
+          if (cancel) {
+            stopAsync(state, ctrl["_lastAsyncId"]);
+            resolve(getCancelledResult(ctrl));
+          } else {
+            props2.onRest = onRest;
+            resolve(runAsync(asyncTo, props2, state, ctrl));
+          }
+        }
+      }
+    }));
+  }
+  if (state.paused) {
+    await new Promise((resume) => {
+      state.resumeQueue.add(resume);
+    });
+  }
+  const result = getCombinedResult(ctrl, await Promise.all(promises));
+  if (loop && result.finished && !(isLoop && result.noop)) {
+    const nextProps = createLoopUpdate(props, loop, to);
+    if (nextProps) {
+      prepareKeys(ctrl, [nextProps]);
+      return flushUpdate(ctrl, nextProps, true);
+    }
+  }
+  if (onResolve) {
+    raf.batchedUpdates(() => onResolve(result, ctrl, ctrl.item));
+  }
+  return result;
+}
+function getSprings(ctrl, props) {
+  const springs = {...ctrl.springs};
+  if (props) {
+    each(toArray(props), (props2) => {
+      if (is.und(props2.keys)) {
+        props2 = createUpdate(props2);
+      }
+      if (!is.obj(props2.to)) {
+        props2 = {...props2, to: void 0};
+      }
+      prepareSprings(springs, props2, (key) => {
+        return createSpring(key);
+      });
+    });
+  }
+  return springs;
+}
+function setSprings(ctrl, springs) {
+  eachProp(springs, (spring, key) => {
+    if (!ctrl.springs[key]) {
+      ctrl.springs[key] = spring;
+      addFluidObserver(spring, ctrl);
+    }
+  });
+}
+function createSpring(key, observer) {
+  const spring = new SpringValue();
+  spring.key = key;
+  if (observer) {
+    addFluidObserver(spring, observer);
+  }
+  return spring;
+}
+function prepareSprings(springs, props, create) {
+  if (props.keys) {
+    each(props.keys, (key) => {
+      const spring = springs[key] || (springs[key] = create(key));
+      spring["_prepareNode"](props);
+    });
+  }
+}
+function prepareKeys(ctrl, queue) {
+  each(queue, (props) => {
+    prepareSprings(ctrl.springs, props, (key) => {
+      return createSpring(key, ctrl);
+    });
+  });
+}
+
+const SpringContext = ({
+  children,
+  ...props
+}) => {
+  const inherited = useContext(ctx);
+  const pause = props.pause || !!inherited.pause, immediate = props.immediate || !!inherited.immediate;
+  props = useMemoOne(() => ({pause, immediate}), [pause, immediate]);
+  const {Provider} = ctx;
+  return /* @__PURE__ */ createElement(Provider, {
+    value: props
+  }, children);
+};
+const ctx = makeContext(SpringContext, {});
+SpringContext.Provider = ctx.Provider;
+SpringContext.Consumer = ctx.Consumer;
+function makeContext(target, init) {
+  Object.assign(target, createContext(init));
+  target.Provider._context = target;
+  target.Consumer._context = target;
+  return target;
+}
+
+class SpringRef extends Function {
+  constructor() {
+    super("return arguments.callee._call.apply(arguments.callee, arguments)");
+    this.current = [];
+  }
+  _call(props) {
+    deprecateDirectCall();
+    this.start(props);
+  }
+  set(values) {
+    each(this.current, (ctrl) => ctrl.set(values));
+  }
+  start(props) {
+    const results = [];
+    each(this.current, (ctrl, i) => {
+      if (is.und(props)) {
+        results.push(ctrl.start());
+      } else {
+        const update = this._getProps(props, ctrl, i);
+        if (update) {
+          results.push(ctrl.start(update));
+        }
+      }
+    });
+    return results;
+  }
+  update(props) {
+    each(this.current, (ctrl, i) => ctrl.update(this._getProps(props, ctrl, i)));
+    return this;
+  }
+  add(ctrl) {
+    if (!this.current.includes(ctrl)) {
+      this.current.push(ctrl);
+    }
+  }
+  delete(ctrl) {
+    const i = this.current.indexOf(ctrl);
+    if (~i)
+      this.current.splice(i, 1);
+  }
+  _getProps(arg, ctrl, index) {
+    return is.fun(arg) ? arg(index, ctrl) : arg;
+  }
+}
+each(["stop", "pause", "resume"], (key) => {
+  SpringRef.prototype[key] = function() {
+    each(this.current, (ctrl) => ctrl[key](...arguments));
+    return this;
+  };
+});
+
+function useSprings(length, props, deps) {
+  const propsFn = is.fun(props) && props;
+  if (propsFn && !deps)
+    deps = [];
+  const ref = useMemo(() => propsFn || arguments.length == 3 ? new SpringRef() : void 0, []);
+  const layoutId = useRef(0);
+  const forceUpdate = useForceUpdate();
+  const state = useMemo(() => ({
+    ctrls: [],
+    queue: [],
+    flush(ctrl, updates2) {
+      const springs2 = getSprings(ctrl, updates2);
+      const canFlushSync = layoutId.current > 0 && !state.queue.length && !Object.keys(springs2).some((key) => !ctrl.springs[key]);
+      return canFlushSync ? flushUpdateQueue(ctrl, updates2) : new Promise((resolve) => {
+        setSprings(ctrl, springs2);
+        state.queue.push(() => {
+          resolve(flushUpdateQueue(ctrl, updates2));
+        });
+        forceUpdate();
+      });
+    }
+  }), []);
+  const ctrls = [...state.ctrls];
+  const updates = [];
+  const prevLength = usePrev(length) || 0;
+  const oldCtrls = ctrls.slice(length, prevLength);
+  useMemo(() => {
+    ctrls.length = length;
+    declareUpdates(prevLength, length);
+  }, [length]);
+  useMemo(() => {
+    declareUpdates(0, Math.min(prevLength, length));
+  }, deps);
+  function declareUpdates(startIndex, endIndex) {
+    for (let i = startIndex; i < endIndex; i++) {
+      const ctrl = ctrls[i] || (ctrls[i] = new Controller(null, state.flush));
+      const update = propsFn ? propsFn(i, ctrl) : props[i];
+      if (update) {
+        updates[i] = declareUpdate(update);
+      }
+    }
+  }
+  const springs = ctrls.map((ctrl, i) => getSprings(ctrl, updates[i]));
+  const context = useContext(SpringContext);
+  const prevContext = usePrev(context);
+  const hasContext = context !== prevContext && hasProps(context);
+  useLayoutEffect(() => {
+    layoutId.current++;
+    state.ctrls = ctrls;
+    const {queue} = state;
+    if (queue.length) {
+      state.queue = [];
+      each(queue, (cb) => cb());
+    }
+    each(oldCtrls, (ctrl) => {
+      detachRefs(ctrl, ref);
+      ctrl.stop(true);
+    });
+    each(ctrls, (ctrl, i) => {
+      const values2 = springs[i];
+      setSprings(ctrl, values2);
+      ref == null ? void 0 : ref.add(ctrl);
+      if (hasContext) {
+        ctrl.start({default: context});
+      }
+      const update = updates[i];
+      if (update) {
+        replaceRef(ctrl, update.ref);
+        if (ctrl.ref) {
+          ctrl.queue.push(update);
+        } else {
+          ctrl.start(update);
+        }
+      }
+    });
+  });
+  useOnce(() => () => {
+    each(state.ctrls, (ctrl) => ctrl.stop(true));
+  });
+  const values = springs.map((x) => ({...x}));
+  return ref ? [values, ref] : values;
+}
+
+function useSpring(props, deps) {
+  const isFn = is.fun(props);
+  const [[values], ref] = useSprings(1, isFn ? props : [props], isFn ? deps || [] : deps);
+  return isFn || arguments.length == 2 ? [values, ref] : values;
+}
+
+class Interpolation extends FrameValue {
+  constructor(source, args) {
+    super();
+    this.source = source;
+    this.idle = true;
+    this._active = new Set();
+    this.calc = createInterpolator(...args);
+    const value = this._get();
+    const nodeType = getAnimatedType(value);
+    setAnimated(this, nodeType.create(value));
+  }
+  advance(_dt) {
+    const value = this._get();
+    const oldValue = this.get();
+    if (!isEqual(value, oldValue)) {
+      getAnimated(this).setValue(value);
+      this._onChange(value, this.idle);
+    }
+    if (!this.idle && checkIdle(this._active)) {
+      becomeIdle(this);
+    }
+  }
+  _get() {
+    const inputs = is.arr(this.source) ? this.source.map(getFluidValue) : toArray(getFluidValue(this.source));
+    return this.calc(...inputs);
+  }
+  _start() {
+    if (this.idle && !checkIdle(this._active)) {
+      this.idle = false;
+      each(getPayload(this), (node) => {
+        node.done = false;
+      });
+      if (globals.skipAnimation) {
+        raf.batchedUpdates(() => this.advance());
+        becomeIdle(this);
+      } else {
+        frameLoop.start(this);
+      }
+    }
+  }
+  _attach() {
+    let priority = 1;
+    each(toArray(this.source), (source) => {
+      if (hasFluidValue(source)) {
+        addFluidObserver(source, this);
+      }
+      if (isFrameValue(source)) {
+        if (!source.idle) {
+          this._active.add(source);
+        }
+        priority = Math.max(priority, source.priority + 1);
+      }
+    });
+    this.priority = priority;
+    this._start();
+  }
+  _detach() {
+    each(toArray(this.source), (source) => {
+      if (hasFluidValue(source)) {
+        removeFluidObserver(source, this);
+      }
+    });
+    this._active.clear();
+    becomeIdle(this);
+  }
+  eventObserved(event) {
+    if (event.type == "change") {
+      if (event.idle) {
+        this.advance();
+      } else {
+        this._active.add(event.parent);
+        this._start();
+      }
+    } else if (event.type == "idle") {
+      this._active.delete(event.parent);
+    } else if (event.type == "priority") {
+      this.priority = toArray(this.source).reduce((highest, parent) => Math.max(highest, (isFrameValue(parent) ? parent.priority : 0) + 1), 0);
+    }
+  }
+}
+function isIdle(source) {
+  return source.idle !== false;
+}
+function checkIdle(active) {
+  return !active.size || Array.from(active).every(isIdle);
+}
+function becomeIdle(self) {
+  if (!self.idle) {
+    self.idle = true;
+    each(getPayload(self), (node) => {
+      node.done = true;
+    });
+    callFluidObservers(self, {
+      type: "idle",
+      parent: self
+    });
+  }
+}
+
+globals.assign({
+  createStringInterpolator: createStringInterpolator$1,
+  to: (source, args) => new Interpolation(source, args)
+});
+
+const isCustomPropRE = /^--/;
+function dangerousStyleValue(name, value) {
+  if (value == null || typeof value === "boolean" || value === "")
+    return "";
+  if (typeof value === "number" && value !== 0 && !isCustomPropRE.test(name) && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name]))
+    return value + "px";
+  return ("" + value).trim();
+}
+const attributeCache = {};
+function applyAnimatedValues(instance, props) {
+  if (!instance.nodeType || !instance.setAttribute) {
+    return false;
+  }
+  const isFilterElement = instance.nodeName === "filter" || instance.parentNode && instance.parentNode.nodeName === "filter";
+  const {style, children, scrollTop, scrollLeft, ...attributes} = props;
+  const values = Object.values(attributes);
+  const names = Object.keys(attributes).map((name) => isFilterElement || instance.hasAttribute(name) ? name : attributeCache[name] || (attributeCache[name] = name.replace(/([A-Z])/g, (n) => "-" + n.toLowerCase())));
+  if (children !== void 0) {
+    instance.textContent = children;
+  }
+  for (let name in style) {
+    if (style.hasOwnProperty(name)) {
+      const value = dangerousStyleValue(name, style[name]);
+      if (name === "float")
+        name = "cssFloat";
+      else if (isCustomPropRE.test(name)) {
+        instance.style.setProperty(name, value);
+      } else {
+        instance.style[name] = value;
+      }
+    }
+  }
+  names.forEach((name, i) => {
+    instance.setAttribute(name, values[i]);
+  });
+  if (scrollTop !== void 0) {
+    instance.scrollTop = scrollTop;
+  }
+  if (scrollLeft !== void 0) {
+    instance.scrollLeft = scrollLeft;
+  }
+}
+let isUnitlessNumber = {
+  animationIterationCount: true,
+  borderImageOutset: true,
+  borderImageSlice: true,
+  borderImageWidth: true,
+  boxFlex: true,
+  boxFlexGroup: true,
+  boxOrdinalGroup: true,
+  columnCount: true,
+  columns: true,
+  flex: true,
+  flexGrow: true,
+  flexPositive: true,
+  flexShrink: true,
+  flexNegative: true,
+  flexOrder: true,
+  gridRow: true,
+  gridRowEnd: true,
+  gridRowSpan: true,
+  gridRowStart: true,
+  gridColumn: true,
+  gridColumnEnd: true,
+  gridColumnSpan: true,
+  gridColumnStart: true,
+  fontWeight: true,
+  lineClamp: true,
+  lineHeight: true,
+  opacity: true,
+  order: true,
+  orphans: true,
+  tabSize: true,
+  widows: true,
+  zIndex: true,
+  zoom: true,
+  fillOpacity: true,
+  floodOpacity: true,
+  stopOpacity: true,
+  strokeDasharray: true,
+  strokeDashoffset: true,
+  strokeMiterlimit: true,
+  strokeOpacity: true,
+  strokeWidth: true
+};
+const prefixKey = (prefix, key) => prefix + key.charAt(0).toUpperCase() + key.substring(1);
+const prefixes = ["Webkit", "Ms", "Moz", "O"];
+isUnitlessNumber = Object.keys(isUnitlessNumber).reduce((acc, prop) => {
+  prefixes.forEach((prefix) => acc[prefixKey(prefix, prop)] = acc[prop]);
+  return acc;
+}, isUnitlessNumber);
+
+const domTransforms = /^(matrix|translate|scale|rotate|skew)/;
+const pxTransforms = /^(translate)/;
+const degTransforms = /^(rotate|skew)/;
+const addUnit = (value, unit) => is.num(value) && value !== 0 ? value + unit : value;
+const isValueIdentity = (value, id) => is.arr(value) ? value.every((v) => isValueIdentity(v, id)) : is.num(value) ? value === id : parseFloat(value) === id;
+class AnimatedStyle extends AnimatedObject {
+  constructor({x, y, z, ...style}) {
+    const inputs = [];
+    const transforms = [];
+    if (x || y || z) {
+      inputs.push([x || 0, y || 0, z || 0]);
+      transforms.push((xyz) => [
+        `translate3d(${xyz.map((v) => addUnit(v, "px")).join(",")})`,
+        isValueIdentity(xyz, 0)
+      ]);
+    }
+    eachProp(style, (value, key) => {
+      if (key === "transform") {
+        inputs.push([value || ""]);
+        transforms.push((transform) => [transform, transform === ""]);
+      } else if (domTransforms.test(key)) {
+        delete style[key];
+        if (is.und(value))
+          return;
+        const unit = pxTransforms.test(key) ? "px" : degTransforms.test(key) ? "deg" : "";
+        inputs.push(toArray(value));
+        transforms.push(key === "rotate3d" ? ([x2, y2, z2, deg]) => [
+          `rotate3d(${x2},${y2},${z2},${addUnit(deg, unit)})`,
+          isValueIdentity(deg, 0)
+        ] : (input) => [
+          `${key}(${input.map((v) => addUnit(v, unit)).join(",")})`,
+          isValueIdentity(input, key.startsWith("scale") ? 1 : 0)
+        ]);
+      }
+    });
+    if (inputs.length) {
+      style.transform = new FluidTransform(inputs, transforms);
+    }
+    super(style);
+  }
+}
+class FluidTransform extends FluidValue {
+  constructor(inputs, transforms) {
+    super();
+    this.inputs = inputs;
+    this.transforms = transforms;
+    this._value = null;
+  }
+  get() {
+    return this._value || (this._value = this._get());
+  }
+  _get() {
+    let transform = "";
+    let identity = true;
+    each(this.inputs, (input, i) => {
+      const arg1 = getFluidValue(input[0]);
+      const [t, id] = this.transforms[i](is.arr(arg1) ? arg1 : input.map(getFluidValue));
+      transform += " " + t;
+      identity = identity && id;
+    });
+    return identity ? "none" : transform;
+  }
+  observerAdded(count) {
+    if (count == 1)
+      each(this.inputs, (input) => each(input, (value) => hasFluidValue(value) && addFluidObserver(value, this)));
+  }
+  observerRemoved(count) {
+    if (count == 0)
+      each(this.inputs, (input) => each(input, (value) => hasFluidValue(value) && removeFluidObserver(value, this)));
+  }
+  eventObserved(event) {
+    if (event.type == "change") {
+      this._value = null;
+    }
+    callFluidObservers(this, event);
+  }
+}
+
+const primitives = [
+  "a",
+  "abbr",
+  "address",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "base",
+  "bdi",
+  "bdo",
+  "big",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "data",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "head",
+  "header",
+  "hgroup",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "keygen",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "menu",
+  "menuitem",
+  "meta",
+  "meter",
+  "nav",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "p",
+  "param",
+  "picture",
+  "pre",
+  "progress",
+  "q",
+  "rp",
+  "rt",
+  "ruby",
+  "s",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "small",
+  "source",
+  "span",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "table",
+  "tbody",
+  "td",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "track",
+  "u",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+  "circle",
+  "clipPath",
+  "defs",
+  "ellipse",
+  "foreignObject",
+  "g",
+  "image",
+  "line",
+  "linearGradient",
+  "mask",
+  "path",
+  "pattern",
+  "polygon",
+  "polyline",
+  "radialGradient",
+  "rect",
+  "stop",
+  "svg",
+  "text",
+  "tspan"
+];
+
+globals.assign({
+  batchedUpdates: unstable_batchedUpdates,
+  createStringInterpolator: createStringInterpolator$1,
+  colors: colors$1
+});
+const host = createHost(primitives, {
+  applyAnimatedValues: applyAnimatedValues,
+  createAnimatedStyle: (style) => new AnimatedStyle(style),
+  getComponentProps: ({scrollTop, scrollLeft, ...props}) => props
+});
+const animated = host.animated;
+
+function AnimatedCard({
+  children,
+  cardStyle = {}
+}) {
+  const ref = useRef();
+  const [isHovered, setHovered] = useState(false);
+  const [animatedProps, setAnimatedProps] = useSpring(() => {
+    return {
+      xys: [0, 0, 1],
+      config: {
+        mass: 10,
+        tension: 400,
+        friction: 40,
+        precision: 0.00001
+      }
+    };
+  });
+  return /*#__PURE__*/React.createElement(animated.div, {
+    ref: ref,
+    className: "AnimatedCard",
+    onMouseEnter: () => setHovered(true),
+    onMouseMove: ({
+      clientX,
+      clientY
+    }) => {
+      const x = clientX - (ref.current.offsetLeft - (window.scrollX || window.pageXOffset || document.body.scrollLeft));
+      const y = clientY - (ref.current.offsetTop - (window.scrollY || window.pageYOffset || document.body.scrollTop));
+      const dampen = 50;
+      const xys = [-(y - ref.current.clientHeight / 2) / dampen, (x - ref.current.clientWidth / 2) / dampen, 1.07];
+      setAnimatedProps({
+        xys: xys
+      });
+    },
+    onMouseLeave: () => {
+      setHovered(false);
+      setAnimatedProps({
+        xys: [0, 0, 1]
+      });
+    },
+    style: { ...{
+        zIndex: isHovered ? 2 : 1,
+        transform: animatedProps.xys.interpolate((x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`)
+      },
+      ...cardStyle
+    }
+  }, children);
+}
+
+var css$1 = ".select-module_categoryes__2YRih{font-family:Nunito Sans,Helvetica Neue,Helvetica,Arial,sans-serif;display:flex;align-items:center;justify-items:center;flex-direction:column;min-height:150px}.select-module_categoryes__2YRih .select-module_dropDownList__2mtJK{cursor:pointer;padding-left:5px;margin-top:2vh;height:26px;min-width:150px!important;background:#fff;border:1px solid rgba(0,0,0,.3);border-radius:5px;display:flex;justify-content:space-between;align-items:center}.select-module_categoryes__2YRih .select-module_dropDownList__2mtJK svg{align-self:center;padding-right:5px}.select-module_categoryes__2YRih .select-module_dropDownListItems__ZcdKy{padding-top:5px;padding-left:5px;padding-bottom:5px;position:relative;top:-4px;overflow:hidden;z-index:1;background:#fff;width:155px;border:1px solid rgba(0,0,0,.3);border-top:none;border-radius:5px;border-top-left-radius:0;border-top-right-radius:0}.select-module_categoryes__2YRih .select-module_dropDownListItems__ZcdKy li{cursor:pointer;padding-left:5px;list-style:none}.select-module_categoryes__2YRih .select-module_dropDownListItems__ZcdKy li:hover{background:#f5f5f5}";
+var styles = {"categoryes":"select-module_categoryes__2YRih","dropDownList":"select-module_dropDownList__2mtJK","dropDownListItems":"select-module_dropDownListItems__ZcdKy"};
+styleInject(css$1);
+
+const error = () => {
+  throw new Error("add a function that activates when pressing list item");
+};
+
+const Select = ({
+  title = "Select From",
+  items = ["firstItem", "secondItem", "thirdItem"],
+  onItem = error,
+  width = "175px"
+}) => {
+  const categoriesItems = items.map(i => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    onClick: () => onItem(i)
+  }, i));
+  console.log(categoriesItems);
+
+  const handleOpenCategoriesList = () => {
+    setOpen(prev => !prev);
+  };
+
+  const onBlurCategoriesList = () => {
+    setOpen(false);
+  };
+
+  const [open, setOpen] = useState(false);
+  return /*#__PURE__*/React.createElement("div", {
+    className: styles.categoryes
+  }, /*#__PURE__*/React.createElement("div", {
+    key: "controls2",
+    onBlur: () => onBlurCategoriesList(),
+    tabIndex: "0"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: styles.dropDownList,
+    style: {
+      width: width
+    },
+    onClick: () => handleOpenCategoriesList()
+  }, /*#__PURE__*/React.createElement("p", null, title), /*#__PURE__*/React.createElement("svg", {
+    height: "20px",
+    viewBox: "0 0 320 512"
+  }, /*#__PURE__*/React.createElement("path", {
+    fill: "currentColor",
+    d: "M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+  }))), open && /*#__PURE__*/React.createElement("div", {
+    className: styles.dropDownListItems,
+    style: {
+      width: width
+    }
+  }, categoriesItems)));
+};
+
+var css = ".card{position:relative;margin:.25em;margin-top:2.5em;width:18vw;height:25vw;box-shadow:1px 0 7px rgba(0,0,0,.1),-1px 0 7px rgba(0,0,0,.1)}.img-container{width:100%;height:15vw;overflow:hidden;display:flex;justify-content:center}.img-container .img{max-width:100%;height:inherit}.card-body{padding:10px}";
+styleInject(css);
+
+const Card = ({
+  children
+}) => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "card"
+  }, children);
+};
+
+const CardBody = ({
+  children
+}) => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "card-body"
+  }, children);
+};
+
+const CardImg = ({
+  src,
+  alt
+}) => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "img-container"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: src,
+    className: "img",
+    alt: alt
+  }));
+};
+
+export { AnimatedCard, Button, Card, CardBody, CardImg, Select };
