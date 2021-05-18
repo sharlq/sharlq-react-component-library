@@ -5,7 +5,7 @@ import { useSpring, animated } from 'react-spring';
 
 
 
-function CardAnimated({ children,cardStyle={}}) {
+const CardAnimated=({ children,cardStyle={}})=> {
     const ref = useRef();
     const [isHovered, setHovered] = useState(false);
     const [animatedProps, setAnimatedProps] = useSpring(() => {
