@@ -1,4 +1,4 @@
-import './AnimatedCard.css'
+import './Animated.css'
 import React, { useState, useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 
@@ -18,7 +18,7 @@ function AnimatedCard({ children,cardStyle={}}) {
     return (
       <animated.div
         ref={ref}
-        className="AnimatedCard"
+        className="animatedCard"
         
         onMouseEnter={() => setHovered(true)}
         onMouseMove={({ clientX, clientY }) => {
