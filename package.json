@@ -1,6 +1,6 @@
 {
   "name": "sharlq-comp-lib",
-  "version": "2.3.8",
+  "version": "2.4.8",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -74,7 +74,7 @@
   "author": "sheha khader",
   "license": "MIT",
   "repository": {
-  "type": "git",
-  "url": "https://github.com/sharlq/sharlq-react-component-library"
-}
+    "type": "git",
+    "url": "https://github.com/sharlq/sharlq-react-component-library"
+  }
 }
