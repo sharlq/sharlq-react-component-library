@@ -72,5 +72,9 @@
     "rollup-plugin-postcss": "^1.6.3"
   },
   "author": "sheha khader",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/sharlq/sharlq-react-component-library"
+}
 }
