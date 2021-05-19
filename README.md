@@ -1,13 +1,7 @@
 # Creating my own component library
   
   for learning purposes and to develope it and use it in the futuer i have published my own library  
-    
-    to download the library  
-    npm i sharlq-comp-lib
-      
-  you can visit the library on npm  here  
-  https://www.npmjs.com/package/sharlq-comp-lib  
-
+  
 
 
 # components
