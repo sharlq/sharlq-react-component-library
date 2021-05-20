@@ -9,8 +9,10 @@
       to download th package
       npm i sharlq-comp-lib
 
-
-
+  
+  
+if you have any suggestions or modifications to any components or advice i am open to pull requests and suggestions  
+  
 # components
 ## Select  
   
