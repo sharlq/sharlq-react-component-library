@@ -1,7 +1,14 @@
 # Creating my own component library
   
   for learning purposes and to develope it and use it in the futuer i have published my own library  
-  
+    
+  to visit the package through this link  
+  https://www.npmjs.com/package/sharlq-comp-lib
+    
+      
+      to download th package
+      npm i sharlq-comp-lib
+
 
 
 # components
@@ -69,7 +76,7 @@ i have created animated card that hovers relative to the position of your cursor
 ### usage
   you can add the classes using yourClass prop  
     
-    
+
 ```ruby
 import {CardAnimated} from 'sharlq-comp-lib'
  <CardAnimated yourClass={"classnamr"}>
