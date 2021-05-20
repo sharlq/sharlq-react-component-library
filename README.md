@@ -67,9 +67,12 @@ i have created animated card that hovers relative to the position of your cursor
 
 
 ### usage
+  you can add the classes using yourClass prop  
+    
+    
 ```ruby
 import {CardAnimated} from 'sharlq-comp-lib'
- <CardAnimated>
+ <CardAnimated yourClass={"classnamr"}>
  {children}
  </CardAnimated>
 

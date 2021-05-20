@@ -5,7 +5,8 @@ import { useSpring, animated } from 'react-spring';
 
 
 
-const CardAnimated=({ children,cardStyle={}})=> {
+const CardAnimated=({ children,cardStyle={},yourClass=""})=> {
+    const classes = `animatedCard ${yourClass}`
     const ref = useRef();
     const [isHovered, setHovered] = useState(false);
     const [animatedProps, setAnimatedProps] = useSpring(() => {
@@ -18,7 +19,7 @@ const CardAnimated=({ children,cardStyle={}})=> {
     return (
       <animated.div
         ref={ref}
-        className="animatedCard"
+        className={classes}
         
         onMouseEnter={() => setHovered(true)}
         onMouseMove={({ clientX, clientY }) => {
