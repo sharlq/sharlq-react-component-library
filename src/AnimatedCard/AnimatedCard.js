@@ -37,15 +37,15 @@ const CardAnimated=({ children,cardStyle={},yourClass=""})=> {
             (x - ref.current.clientWidth / 2) / dampen, 
             1.07 
           ];
-          setAnimatedProps({ xys: xys });
+          setAnimatedProps.start({ xys: xys });
         }}
         onMouseLeave={() => {
           setHovered(false);
-          setAnimatedProps({ xys: [0, 0, 1] });
+          setAnimatedProps.start({ xys: [0, 0, 1] });
         }}
         style={{...{
           zIndex: isHovered ? 2 : 1,
-          transform: animatedProps.xys.interpolate(
+          transform: animatedProps.xys.to(
             (x, y, s) =>
               `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
           )

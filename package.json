@@ -76,5 +76,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/sharlq/sharlq-react-component-library"
-  }
+  },
+  "keywords": [
+    "components",
+    "card",
+    "hover card",
+    "animated card",
+    "select",
+    "customizable",
+    "customizable select"
+  ]
 }
